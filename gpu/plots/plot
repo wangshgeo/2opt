@@ -1,0 +1,15 @@
+#!/bin/bash
+
+gnuplot -persist > /dev/null 2>&1 << EOF
+	set yrange [0:]
+	set logscale x
+	set key right bottom
+	set title "2-Opt Speeds (EUC_2D) vs. Number of Simultaneous Independent Instances on usa13509.tsp"
+	set xlabel "Simultaneous Independent Instances"
+	set ylabel "Speed (Gigamoves / second)"
+	plot	"b13509_1.txt" u 1:2 t "Burtscher, 13509 cities, 1 iteration" w linespoints,\
+			"b13509_10000.txt" u 1:2 t "Burtscher, 13509 cities, 10000 iteration" w linespoints,\
+			"b13509_finish.txt" u 1:2 t "Burtscher, 13509 cities, finished to completion" w linespoints,\
+			"l13509_1.txt" u 1:2 t "Lee, 13509 cities, 1 iteration" w linespoints,\
+			"l13509_10000.txt" u 1:2 t "Lee, 13509 cities, 10000 iterations" w linespoints
+EOF

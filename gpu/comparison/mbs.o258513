@@ -1,0 +1,11 @@
+Adding user rlee32 to group authjobs
+Script began: Mon Feb 9 17:24:19 EST 2015
+Node: jinx13
+Current directory: /nethome/rlee32/finalproject/comparison
+2-opt TSP CUDA GPU code v2.2 [Kepler]
+Copyright (c) 2014, Texas State University. All rights reserved.
+configuration: 13509 cities, 200 restarts, /nethome/rlee32/finalproject/comparison/../ALL_tsp/usa13509.tsp input
+Thread count: 192
+
+=== Done! ===
+Removing user rlee32 from group authjobs

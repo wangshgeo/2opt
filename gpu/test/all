@@ -1,0 +1,80 @@
+Reading in the TSP file at: /nethome/rlee32/finalproject/ALL_tsp/u2319.tsp
+City Count: 2319
+
+Initializing Host and GPU Data...
+Done.
+
+Sequential min diff, k: -11346.000000, 273359
+
+Kernel Version 1
+Grid Dim: 10481 x 1
+Block Dim: 256 x 1
+Size of Returned Array: 2683086
+Number of swaps computed and reduced: 2683086
+GPU min diff, k : -11346.000000, 1248321
+Execution time: 0.437050 ms
+
+Kernel Version 2
+Grid Dim: 10481 x 1
+Block Dim: 256 x 1
+Size of Returned Array: 10481
+Number of swaps computed and reduced: 2683086
+GPU min diff, k : -11346.000000, 4876
+Execution time: 0.539104 ms
+
+Kernel Version 3
+Grid Dim: 10585 x 1
+Block Dim: 16 x 16
+Size of Returned Array: 10585
+Number of swaps computed and reduced: 2683086
+GPU min diff, k : -11346.000000, 4893
+Execution time: 0.691232 ms
+
+Kernel Version 31
+Grid Dim: 10585 x 1
+Block Dim: 16 x 16
+Size of Returned Array: 10585
+Number of swaps computed and reduced: 2683086
+GPU min diff, k : -11346.000000, 4893
+Execution time: 0.689837 ms
+
+Kernel Version 4
+Grid Dim: 1711 x 1
+Block Dim: 8 x 8
+Size of Returned Array: 1711
+Number of swaps computed and reduced: 2683086
+GPU min diff, k : -11346.000000, 797
+Execution time: 0.293709 ms
+
+Kernel Version 5
+Grid Dim: 1711 x 1
+Block Dim: 8 x 8
+Size of Returned Array: 109504
+Number of swaps computed and reduced: 2683086
+GPU min diff, k : -11346.000000, 51019
+Execution time: 0.287501 ms
+
+Kernel Version 6
+Grid Dim: 1711 x 1
+Block Dim: 8 x 8
+Size of Returned Array: 1711
+Number of swaps computed and reduced: 2683086
+GPU min diff, k : -11346.000000, 797
+Execution time: 0.293683 ms
+
+Kernel Version 7
+Grid Dim: 1711 x 1
+Block Dim: 8 x 8
+Size of Returned Array: 1711
+Number of swaps computed and reduced: 2683086
+GPU min diff, k : -11346.000000, 797
+Execution time: 0.200422 ms
+
+Kernel Version 8
+Grid Dim: 1711 x 1
+Block Dim: 8 x 8
+Size of Returned Array: 1711
+Number of swaps computed and reduced: 2683086
+GPU min diff, k : -11346.000000, 797
+Execution time: 0.170547 ms
+

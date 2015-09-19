@@ -1,0 +1,5 @@
+rm *.o run
+g++ -o run \
+	main.cpp drawing.cpp geometric.cpp input.cpp \
+	-g -Wall -O0 \
+	-L/usr/X11R6/lib -lm -lpthread -lX11

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+nano opt2.o*
+nano opt2.e*

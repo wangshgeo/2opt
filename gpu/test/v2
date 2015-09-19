@@ -1,0 +1,17 @@
+Reading in the TSP file at: /nethome/rlee32/finalproject/ALL_tsp/u1060.tsp
+City Count: 1060
+
+Initializing Host and GPU Data...
+Done.
+
+Sequential min diff, k: -31733.000000, 116279
+
+Number of swaps computed and reduced: 559153
+GPU min diff, k : -31733.000000, 652
+Execution time: 0.263443 ms
+
+Execution time: 0.599610 ms
+Equivalent performance: 111.920928 GB/s
+Answer is correct
+Reference answer is 0.996214
+GPU answer is 0.996214

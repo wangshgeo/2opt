@@ -1,0 +1,6 @@
+rm -rf *.o
+rm -rf run
+g++ -o run \
+    main.cpp \
+    ../instance.cpp ../solution.cpp \
+    -g -Wall -O0 -std=c++11

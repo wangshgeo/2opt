@@ -1,0 +1,1 @@
+/usr/local/cuda-6.5/bin/nvcc -O3 -use_fast_math -arch sm_35 --ptxas-options=-v TSP_GPU22.cu

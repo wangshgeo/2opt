@@ -1,0 +1,33 @@
+2-opt TSP CUDA GPU code v2.2 [Kepler]
+Copyright (c) 2014, Texas State University. All rights reserved.
+Cities read: 13509
+configuration: 13509 cities, 200 restarts, ../ALL_tsp/usa13509.tsp input
+Thread count: 128
+runtime = 10386.4118 s, 35.930 Gmoves/s
+best found tour length = 22021880
+
+-O3 flag (no difference)
+
+2-opt TSP CUDA GPU code v2.2 [Kepler]
+Copyright (c) 2014, Texas State University. All rights reserved.
+Cities read: 13509
+configuration: 13509 cities, 200 restarts, ../ALL_tsp/usa13509.tsp input
+Thread count: 128
+runtime = 10351.6229 s, 36.047 Gmoves/s
+best found tour length = 21999132
+
+2-opt TSP CUDA GPU code v2.2 [Kepler]
+Copyright (c) 2014, Texas State University. All rights reserved.
+Cities read: 13509
+configuration: 13509 cities, 100 restarts, ../ALL_tsp/usa13509.tsp input
+Thread count: 128
+runtime = 4364.2854 s, 42.756 Gmoves/s
+best found tour length = 22020375
+
+2-opt TSP CUDA GPU code v2.2 [Kepler]rPerformance  mbs.e258513  mbs.o258513  performance  run  TSP_GPU22_2.cu  TSP_GPU22.cu  view
+Copyright (c) 2014, Texas State University. All rights reserved.
+Cities read: 13509 code v2.2 [Kepler]
+configuration: 13509 cities, 50 restarts, ../ALL_tsp/usa13509.tsp input
+Thread count: 1289
+runtime = 3795.0101 s, 24.594 Gmoves/srts, ../ALL_tsp/usa13509.tsp input
+best found tour length = 22015096

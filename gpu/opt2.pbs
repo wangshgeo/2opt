@@ -1,0 +1,31 @@
+#PBS -q research
+#PBS -l nodes=1:m2090
+#PBS -l walltime=01:00:00
+#PBS -N opt2
+
+# Changes to the directory we were in when we
+# submit the job:
+
+cd $PBS_O_WORKDIR
+
+# Runs a bunch of standard command-line
+# utilities, just as an example:
+
+echo "Script began:" `date`
+echo "Node:" `hostname`
+echo "Current directory: ${PWD}"
+
+# EUC_2D cases eil101, u1060, u2319, rl5934, usa13509, d18512
+TSPCASE=usa13509
+#TSPFILE=${PBS_O_WORKDIR}/ALL_tsp/${TSPCASE}/${TSPCASE}.tsp
+TSPFILE=${PBS_O_WORKDIR}/ALL_tsp/${TSPCASE}.tsp
+
+echo ""
+echo "=== Running $TSPCASE ... ==="
+
+./opt2 ${TSPFILE}
+
+echo ""
+echo "=== Done! ==="
+
+# eof

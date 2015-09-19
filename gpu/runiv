@@ -1,0 +1,16 @@
+./clean
+make
+
+# EUC_2D cases eil101, u1060, u2319, rl5934, usa13509
+TSPCASE=usa13509
+#TSPFILE=ALL_tsp/${TSPCASE}/${TSPCASE}.tsp
+TSPFILE=ALL_tsp/${TSPCASE}.tsp
+
+echo ""
+echo "=== Running $TSPCASE ... ==="
+
+./opt2 ${TSPFILE}
+
+echo ""
+echo "=== Done! ==="
+

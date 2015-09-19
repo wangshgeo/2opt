@@ -22,8 +22,10 @@ This repository includes several implementation variants:
 2. distance_table: store all possible distances in a table, and use this when 
   performing the 2-Opt checks. On my machine on usa13509.tsp, this runs about 
   4x faster than the naive version.
-3. quadtree: an experimental algorithm utilizing a quadtree in a similar way to 
+3. gpu: a CUDA GPU version.
+4. quadtree: an experimental algorithm utilizing a quadtree in a similar way to 
   the Barnes-Hut algorithm for n-body problems, but tailored to segments.
+
 
 # Running the Programs
 
