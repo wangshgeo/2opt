@@ -1,8 +1,7 @@
 #include "checks.hh"
 
-
-void check_valid_tour(const dtype* x_original, const dtype* y_original,const int nc,
-	const dtype* x, const dtype* y)
+void check_valid_tour(const dtype* x_original, const dtype* y_original,
+	const int nc,	const dtype* x, const dtype* y)
 {
 	int* checklist = new int[nc];
 	for(int i=0;i<nc;++i) checklist[i] = 0;

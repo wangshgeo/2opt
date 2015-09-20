@@ -22,12 +22,26 @@
 #include "Node.h"
 #include "quadtree_serial.h"
 #include "segment_serial.h"
+#include "Instance.h"
+
+using namespace std;
 
 #define ITERATIONS 1 // Maximum number of 2-opt iterations.
 
 int main(int argc, char ** argv)
 {
   
+  if(argc < 2)
+  {
+    cout << "\nPlease enter the input file name!\n\n";
+    return EXIT_SUCCESS;
+  }
+
+  string file_name(argv[1]);
+  cout << file_name << "\n";
+
+  Instance instance(file_name);
+
   int random_seed = 0;
   srand(random_seed);
 
@@ -120,13 +134,15 @@ int main(int argc, char ** argv)
     int best_segment_index;//index in best_node segments (container).
 
     timer.start();
-    best_improvement(&i_best_original,&j_best_original,&cost_original,x,y,n,dtable,map);
-    fprintf(stdout, "\tOriginal best: %d %d %f\n", i_best_original, j_best_original, (dtype) cost_original);
+    best_improvement(&i_best_original,&j_best_original,&cost_original,x,y,n,
+      dtable,map);
+    fprintf(stdout, "\tOriginal best: %d %d %f\n", i_best_original, 
+      j_best_original, (dtype) cost_original);
     original_best_improvement_time += timer.stop();
 
     timer.start();
-    best_improvement_quadtree( &i_best_quadtree, &j_best_quadtree, &cost_quadtree,
-      &best_node, &best_segment_index,
+    best_improvement_quadtree( &i_best_quadtree, &j_best_quadtree, 
+      &cost_quadtree, &best_node, &best_segment_index,
       segments, segment_center_x, segment_center_y,
       x, y, n, tree, map );
     fprintf(stdout, "\tQuadtree best: %d %d %f\n", i_best_quadtree, j_best_quadtree, (dtype) cost_quadtree);
