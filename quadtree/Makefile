@@ -6,7 +6,7 @@ SRCS = driver.cc checks.cc \
 	morton_serial.cc Node.cc \
 	quadtree_serial.cc segment_serial.cc \
 	input.cc \
-	Instance.cc
+	Instance.cc Tour.cc
 
 
 %.o: %.cc

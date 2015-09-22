@@ -34,7 +34,7 @@ int main(int argc, char ** argv)
 	int *h_initialTour;
 	h_initialTour = new int[nc];
 	for(int i=0;i<nc;++i) h_initialTour[i] = i;
-	random_shuffle(h_initialTour,h_initialTour+nc);
+	// random_shuffle(h_initialTour,h_initialTour+nc);
 	fprintf(stdout,"Done.\n");
 	
 	fprintf(stdout,"Initializing (Host) Coordinates... ");
