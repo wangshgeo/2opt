@@ -16,6 +16,8 @@
 #include "morton_serial.h"
 #include "segment_serial.h"
 #include "quadtree_serial.h"
+#include "Instance.h"
+#include "Tour.h"
 
 // Step 2. Use the TEST macro to define your tests.
 //
@@ -286,6 +288,46 @@ TEST(SegmentTest, InsertSegment4)
   delete[] point_morton_pairs;
   destroy_quadtree_serial(tree);
 }
+
+
+
+
+
+
+
+TEST(SegmentCorrectness, 2OptIterations)
+{
+  string file_name("usa13509.tsp");
+
+  Instance instance(file_name);
+
+  Tour tour(instance);
+
+  tour.SerialCheck();
+  tour.SerialCheck();
+  tour.Check();
+  tour.SerialCheck();
+  tour.Check();
+  tour.SerialCheck();
+  tour.Check();
+  tour.SerialCheck();
+  tour.Check();
+  tour.SerialCheck();
+  tour.Check();
+  tour.SerialCheck();
+  tour.Check();
+  tour.SerialCheck();
+  tour.Check();
+  tour.SerialCheck();
+  tour.Check();
+  tour.SerialCheck();
+  tour.Check();
+}
+
+
+
+
+
 
 // Step 3. Call RUN_ALL_TESTS() in main().
 //

@@ -24,6 +24,8 @@ public:
   int cities() { return cities_; }
   double* x() { return x_; }
   double* y() { return y_; }
+  double x(int i) { return x_[i]; }
+  double y(int i) { return y_[i]; }
   void Swap(Segment& first_deleted, Segment& second_deleted);
   ~Tour()
   {

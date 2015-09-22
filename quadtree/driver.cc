@@ -14,16 +14,15 @@
 
 // Project-specific headers
 #include "Timer.h"
-#include "checks.h"
 #include "input.h"
 #include "best_improvement.h"
 #include "swap.h"
-#include "morton_serial.h"
-#include "Node.h"
-#include "quadtree_serial.h"
-#include "segment_serial.h"
+// #include "morton_serial.h"
+// #include "quadtree_serial.h"
+// #include "segment_serial.h"
 #include "Instance.h"
 #include "Tour.h"
+#include "QuadtreeNode.h"
 
 using namespace std;
 
@@ -43,26 +42,6 @@ int main(int argc, char ** argv)
   Instance instance(file_name);
 
   Tour tour(instance);
-
-  tour.SerialCheck();
-  tour.SerialCheck();
-  tour.Check();
-  tour.SerialCheck();
-  tour.Check();
-  tour.SerialCheck();
-  tour.Check();
-  tour.SerialCheck();
-  tour.Check();
-  tour.SerialCheck();
-  tour.Check();
-  tour.SerialCheck();
-  tour.Check();
-  tour.SerialCheck();
-  tour.Check();
-  tour.SerialCheck();
-  tour.Check();
-  tour.SerialCheck();
-  tour.Check();
 
   // long double quadtree_best_improvement_time = 0;
   // Timer timer;

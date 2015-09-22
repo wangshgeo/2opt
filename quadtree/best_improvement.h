@@ -12,7 +12,6 @@
 
 // Project-specific headers
 #include "types.h"
-#include "checks.h"
 
 
 void 
