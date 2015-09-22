@@ -49,6 +49,20 @@ int main(int argc, char ** argv)
   tour.Check();
   tour.SerialCheck();
   tour.Check();
+  tour.SerialCheck();
+  tour.Check();
+  tour.SerialCheck();
+  tour.Check();
+  tour.SerialCheck();
+  tour.Check();
+  tour.SerialCheck();
+  tour.Check();
+  tour.SerialCheck();
+  tour.Check();
+  tour.SerialCheck();
+  tour.Check();
+  tour.SerialCheck();
+  tour.Check();
 
   // long double quadtree_best_improvement_time = 0;
   // Timer timer;

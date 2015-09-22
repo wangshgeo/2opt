@@ -24,17 +24,19 @@ void Tour::Swap(Segment& first_deleted, Segment& second_deleted)
   // Delete and construct anew.
   if(first_deleted.order < second_deleted.order) 
   {
+    int original_first_end_city = first_deleted.end_city;
     renew_segment(first_deleted, 
       first_deleted.start_city, second_deleted.start_city);
     renew_segment(second_deleted, 
-      first_deleted.end_city, second_deleted.end_city);
+      original_first_end_city, second_deleted.end_city);
   }
   else
   {
+    int original_second_end_city = second_deleted.end_city;
     renew_segment(second_deleted, 
       second_deleted.start_city, first_deleted.start_city);
     renew_segment(first_deleted, 
-      second_deleted.end_city, first_deleted.end_city);
+      original_second_end_city, first_deleted.end_city);
   }
   
 }
