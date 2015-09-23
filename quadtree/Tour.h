@@ -28,6 +28,8 @@ public:
   double y(int i) { return y_[i]; }
   Segment* segment(int index) { return &segments_[index]; }
   void Swap(Segment& first_deleted, Segment& second_deleted);
+  cost_t SwapCost(Segment& s1, Segment& s2);
+  bool adjacent_segments(Segment& s1, Segment& s2);
   ~Tour()
   {
     delete[] segments_;
@@ -45,8 +47,6 @@ private:
   void renew_segment(Segment& segment, 
     int new_start_city, int new_end_city);
   cost_t Cost(int city1, int city2);
-  bool adjacent_segments(Segment& s1, Segment& s2);
-  cost_t SwapCost(Segment& s1, Segment& s2);
 };
 
 

@@ -31,6 +31,14 @@ public:
 		}
 	}
 	QuadtreeNode* children(int index) { return children_[index]; }
+	int total_segment_count() { return total_segment_count_; }
+	segment_container* immediate_segments() { return &immediate_segments_; }
+	int immediate_segment_count() { return immediate_segments_.size(); }
+	double diameter() { return diameter_; }
+	double average_point_location(int index)
+	{
+		return average_point_location_[index];
+	}
 	void AddImmediateSegment(Segment* segment);
 	void Print();
 private:
@@ -65,6 +73,8 @@ private:
 	void DetermineAveragePointLocations(Tour& tour);
 	void ModifyTotalSegmentCount(int amount);
 	void DeleteImmediateSegment(segment_container::iterator it);
+	void ComputeDiameter(pair<morton_key_type, int>* morton_key_pairs, 
+		Tour& tour);
 };
 
 #endif

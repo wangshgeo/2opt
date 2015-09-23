@@ -86,9 +86,9 @@ vector<int> Quadtree::MergePointMortonKeys(morton_key_type key1,
   morton_key_type key2)
 {
 
-  cout << "Merging: " << endl;
-  cout << bitset<64>(key1).to_string().substr(22) << endl;
-  cout << bitset<64>(key2).to_string().substr(22) << endl;
+  // cout << "Merging: " << endl;
+  // cout << bitset<64>(key1).to_string().substr(22) << endl;
+  // cout << bitset<64>(key2).to_string().substr(22) << endl;
   vector<int> traversal;
   // We skip i = 0 because that would simply lead to root comparison.
   for(int i = 1; i < MAX_LEVEL; ++i)
@@ -99,7 +99,7 @@ vector<int> Quadtree::MergePointMortonKeys(morton_key_type key1,
     {
       int quadrant = static_cast<int>(level1 & MORTON_THREE);
       traversal.push_back(quadrant);
-      cout << quadrant << endl;
+      // cout << quadrant << endl;
     }
   }
   return traversal;

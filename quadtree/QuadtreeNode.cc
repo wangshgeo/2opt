@@ -24,6 +24,7 @@ QuadtreeNode::QuadtreeNode(QuadtreeNode* parent__, int quadrant__,
 
   DetermineAveragePointLocations(tour);
 
+  ComputeDiameter(morton_key_pairs, tour);
 }
 
 void QuadtreeNode::DetermineTreeLevel()
@@ -159,6 +160,7 @@ void QuadtreeNode::Print()
   cout << tabs << "Total Number of Points: " << total_point_count_ << endl;
   cout << tabs << "Average Point Center: " << average_point_location_[0]
     << ", " << average_point_location_[1] << endl;
+  cout << tabs << "Diameter: " << diameter_ << endl;
   cout << tabs << "Total Number of Segments: " << total_segment_count_ << endl;
   cout << tabs << "Immediate Segments: " << immediate_segments_.size() << endl;
   cout << tabs << "Is leaf: " << is_leaf_ << endl;
@@ -190,7 +192,21 @@ void QuadtreeNode::DeleteImmediateSegment(segment_container::iterator it)
 }
 
 
-
+// We assume average point location has already been computed.
+void QuadtreeNode::ComputeDiameter(
+  pair<morton_key_type, int>* morton_key_pairs, Tour& tour)
+{
+  double max_square = 0;
+  for(int i = 0; i < total_point_count_; ++i)
+  {
+    int city_id = morton_key_pairs[i].second;
+    double dx = tour.x(city_id) - average_point_location_[0];
+    double dy = tour.y(city_id) - average_point_location_[1];
+    double square = dx*dx + dy*dy;
+    if (square > max_square) max_square = square;
+  }
+  diameter_ = 2 * sqrt(max_square);
+}
 
 
 // void remove_extreme_point_and_readjust(Node* root, const int direction, 

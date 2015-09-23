@@ -12,6 +12,9 @@ public:
   int end_city; // index of the ending city of this segment.
   int order; // The order of this segment in the global tour.
   cost_t length; // length (or cost) of this segment.
+  // The coordinates of the bisecting point.
+  double center_x;
+  double center_y;
 };
 
 #endif

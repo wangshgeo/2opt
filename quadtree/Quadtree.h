@@ -22,6 +22,7 @@ public:
     delete[] point_morton_keys_;
     delete root_;
   }
+  QuadtreeNode* root() { return root_; }
   void Print() { root_->Print(); }
 private:
   morton_key_type* point_morton_keys_; // point morton keys accessible by point 
