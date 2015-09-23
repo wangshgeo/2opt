@@ -4,6 +4,7 @@
 #include <vector>
 #include <algorithm>
 #include <utility>
+#include <bitset>
 
 #include "Tour.h"
 #include "MortonKey.h"
@@ -20,6 +21,7 @@ public:
     delete[] point_morton_keys_;
     delete root_;
   }
+  void Print() { root_->Print(); }
 private:
   morton_key_type* point_morton_keys_; // point morton keys accessible by point 
     // identifier.

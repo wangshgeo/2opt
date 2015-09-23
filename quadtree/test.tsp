@@ -1,0 +1,7 @@
+NAME : test
+DIMENSION : 4
+NODE_COORD_SECTION
+1 0 0
+2 0.1 0.1
+3 1 1
+4 0.9 0.9

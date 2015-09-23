@@ -15,8 +15,6 @@ QuadtreeNode::QuadtreeNode(QuadtreeNode* parent__, int quadrant__,
 {
   DetermineTreeLevel();
 
-  // cout << "Tree level: " << tree_level_ << endl;cin.ignore();
-
   children_[0] = nullptr;
   children_[1] = nullptr;
   children_[2] = nullptr;
@@ -73,6 +71,13 @@ void QuadtreeNode::DetermineChildren(
       morton_key_pairs[0].first, tree_level_);
     pair<morton_key_type, int>* end = morton_key_pairs + total_point_count_;
     
+    // cout << "quadrants at level " << tree_level_ << ": " << endl;
+    // for(int i = 0; i < 4; ++i) 
+    // {
+    //   cout << bitset<64>(quadrant_keys[i]).to_string().substr(22) << endl;
+    // }
+
+
     // Determine the starting point of each quadrant.
     pair<morton_key_type, int>* starts[5];
     starts[0] = morton_key_pairs;
@@ -132,25 +137,35 @@ void QuadtreeNode::DetermineAveragePointLocations(Tour& tour)
     {
       if( children_[i] != nullptr ) 
       {
-        average_point_location_[0] *= total_point_count_;
-        average_point_location_[1] *= total_point_count_;
-
         average_point_location_[0] += children_[i]->total_point_count_
           * children_[i]->average_point_location_[0];
         average_point_location_[1] += children_[i]->total_point_count_
           * children_[i]->average_point_location_[1];
-        
-        total_point_count_ += children_[i]->total_point_count_;
-
-        average_point_location_[0] /= total_point_count_;
-        average_point_location_[1] /= total_point_count_;
       }
     }
+    average_point_location_[0] /= total_point_count_;
+    average_point_location_[1] /= total_point_count_;
   }
 }
 
 
-
+void QuadtreeNode::Print()
+{
+  string tabs("");
+  for(int i = 0; i < tree_level_; ++i) tabs+="\t";
+  cout << endl;
+  cout << tabs << "Tree level: " << tree_level_ << endl;
+  cout << tabs << "Quadrant: " << quadrant_ << endl;
+  cout << tabs << "Total Number of Points: " << total_point_count_ << endl;
+  cout << tabs << "Average Point Center: " << average_point_location_[0]
+    << ", " << average_point_location_[1] << endl;
+  cout << tabs << "Is leaf: " << is_leaf_ << endl;
+  cout << endl;
+  for(int i = 0; i < 4; ++i)
+  {
+    if(children_[i] != nullptr) children_[i]->Print();
+  }
+}
 
 
 

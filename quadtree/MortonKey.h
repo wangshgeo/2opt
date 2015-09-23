@@ -10,7 +10,8 @@ typedef unsigned long int morton_key_type; // consists of interleaved
   // binary_type
 const int MAX_LEVEL = 21; //maximum level / depth of the quadtree. Leave at 
   // least one bit for flags.
-const binary_type BINARY_TYPE_MAXIMUM = 1 << MAX_LEVEL; // to be multiplied by 
+const binary_type BINARY_TYPE_MAXIMUM 
+  = static_cast<binary_type>(1) << (MAX_LEVEL - 1); // to be multiplied by 
   // the normalized (0,1) coordinate.
 
 // Deals with coordinates normalized to be in [0,1].

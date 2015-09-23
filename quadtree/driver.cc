@@ -14,12 +14,6 @@
 
 // Project-specific headers
 #include "Timer.h"
-#include "input.h"
-#include "best_improvement.h"
-#include "swap.h"
-// #include "morton_serial.h"
-// #include "quadtree_serial.h"
-// #include "segment_serial.h"
 #include "Instance.h"
 #include "Tour.h"
 #include "Quadtree.h"
@@ -38,13 +32,15 @@ int main(int argc, char ** argv)
   }
 
   string file_name(argv[1]);
-  cout << file_name << "\n";
+  cout << "Reading " << file_name << "\n";
 
   Instance instance(file_name);
 
   Tour tour(instance);
 
   Quadtree quadtree(tour);
+
+  // quadtree.Print();
 
   // long double quadtree_best_improvement_time = 0;
   // Timer timer;

@@ -13,6 +13,20 @@ Quadtree::Quadtree(Tour& tour)
   double x_range = x_max - x_min;
   double y_range = y_max - y_min;
 
+  // In this tree construction code we assume the points at within each node 
+  // have the same Morton Key prefix. So when a point is on the exact boundary, 
+  // it gets put into the quadrant it would go in if it was a small increment 
+  // larger (in either x or y). This is fine, EXCEPT at the root. There is no 
+  // next quadrant. So, we have to apply fudge factor to ranges to completely 
+  // capture boundary points.
+  const double fudge_factor = 1.00001;
+  x_range *= fudge_factor;
+  y_range *= fudge_factor;
+
+  // cout << "x and y range: " << x_range << " " << y_range << endl;
+  // cout << "x and y min: " << x_min << " " << y_min << endl;
+  // cout << "x and y max: " << x_max << " " << y_max << endl;
+
   // The sorted morton key array is only needed for construction. After that, 
   // it is no longer needed.
   // So we can sort by the first item in pair, and retain the city index,
@@ -25,12 +39,14 @@ Quadtree::Quadtree(Tour& tour)
     double y_normalized = ( tour.y(i) - y_min ) / y_range;
     
     // filter normalized values
-    x_normalized = (x_normalized <= 0.0) ? 0.0: x_normalized;
-    y_normalized = (y_normalized <= 0.0) ? 0.0: y_normalized;
-    x_normalized = (x_normalized >= 1.0) ? 1.0: x_normalized;
-    y_normalized = (y_normalized >= 1.0) ? 1.0: y_normalized;
+    x_normalized = (x_normalized < 0.0) ? 0.0: x_normalized;
+    y_normalized = (y_normalized < 0.0) ? 0.0: y_normalized;
+    x_normalized = (x_normalized > 1.0) ? 1.0: x_normalized;
+    y_normalized = (y_normalized > 1.0) ? 1.0: y_normalized;
 
     MortonKey morton_key(i, x_normalized, y_normalized);
+    // bitset<8*sizeof(morton_key.value())> morton_bits(morton_key.value());
+    // cout << morton_bits.to_string().substr(22) << endl;
     pair<morton_key_type, int> morton_key_pair ( morton_key.value(), i );
     point_morton_keys_[i] = morton_key.value();
     morton_key_pairs.push_back( morton_key_pair );

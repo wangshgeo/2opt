@@ -18,6 +18,7 @@
 #include "quadtree_serial.h"
 #include "Instance.h"
 #include "Tour.h"
+#include "Quadtree.h"
 
 // Step 2. Use the TEST macro to define your tests.
 //
@@ -295,37 +296,49 @@ TEST(SegmentTest, InsertSegment4)
 
 
 
-TEST(SegmentCorrectness, 2OptIterations)
+// TEST(SegmentCorrectness, 2OptIterations)
+// {
+//   string file_name("usa13509.tsp");
+
+//   Instance instance(file_name);
+
+//   Tour tour(instance);
+
+//   tour.SerialCheck();
+//   tour.SerialCheck();
+//   tour.Check();
+//   tour.SerialCheck();
+//   tour.Check();
+//   tour.SerialCheck();
+//   tour.Check();
+//   tour.SerialCheck();
+//   tour.Check();
+//   tour.SerialCheck();
+//   tour.Check();
+//   tour.SerialCheck();
+//   tour.Check();
+//   tour.SerialCheck();
+//   tour.Check();
+//   tour.SerialCheck();
+//   tour.Check();
+//   tour.SerialCheck();
+//   tour.Check();
+// }
+
+
+
+
+
+TEST(Quadtree, Example)
 {
-  string file_name("usa13509.tsp");
+  string file_name("test.tsp");
 
   Instance instance(file_name);
 
   Tour tour(instance);
 
-  tour.SerialCheck();
-  tour.SerialCheck();
-  tour.Check();
-  tour.SerialCheck();
-  tour.Check();
-  tour.SerialCheck();
-  tour.Check();
-  tour.SerialCheck();
-  tour.Check();
-  tour.SerialCheck();
-  tour.Check();
-  tour.SerialCheck();
-  tour.Check();
-  tour.SerialCheck();
-  tour.Check();
-  tour.SerialCheck();
-  tour.Check();
-  tour.SerialCheck();
-  tour.Check();
+  Quadtree quadtree(tour);
 }
-
-
-
 
 
 

@@ -4,6 +4,7 @@
 #include <vector>
 #include <utility>
 #include <algorithm>
+#include <bitset>
 
 #include "Tour.h"
 #include "MortonKey.h"
@@ -26,6 +27,7 @@ public:
 			if (children_[i] != nullptr) delete children_[i];
 		}
 	}
+	void Print();
 private:
 	// Tree location information.
 	QuadtreeNode* parent_;

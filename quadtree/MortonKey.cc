@@ -27,15 +27,10 @@ void MortonKey::Interleave(
 vector<morton_key_type> ExtractLeadingQuadrants(
   morton_key_type node_morton_key, int tree_level)
 {
-  // std::bitset<sizeof(mtype)*8> aob(all_ones);
-  // std::cout << "\tall_ones: " << aob << std::endl;
-
   // Determine prefix mask.
-  int suffix_bits = 2*(MAX_LEVEL - tree_level);
+  int suffix_bits = 2*(MAX_LEVEL - tree_level - 1); // we subtract one because 
+    // the quadrants are one level down from the current tree_level_.
   morton_key_type prefix_mask = MORTON_ALL_ONES << suffix_bits;
-
-  // std::bitset<sizeof(mtype)*8> pmb(prefix_mask);
-  // std::cout << "\tprefix_mask: " << pmb << std::endl;
 
   // Obviously, we assume keys have the same prefix for a given node.
   morton_key_type prefix = node_morton_key & prefix_mask;
@@ -52,11 +47,4 @@ vector<morton_key_type> ExtractLeadingQuadrants(
   quadrant_keys.push_back(prefix+suffix03);
   
   return quadrant_keys;
-
-  // std::bitset<sizeof(mtype)*8> q2b(q2);
-  // std::cout << "\tq2: " << q2b << std::endl;
-  // std::bitset<sizeof(mtype)*8> q3b(q3);
-  // std::cout << "\tq3: " << q3b << std::endl;
-  // std::bitset<sizeof(mtype)*8> q4b(q4);
-  // std::cout << "\tq4: " << q4b << std::endl;
 }
