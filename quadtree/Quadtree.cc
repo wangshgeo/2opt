@@ -18,6 +18,7 @@ Quadtree::Quadtree(Tour& tour)
   // So we can sort by the first item in pair, and retain the city index,
   // we create the following vector.
   vector< pair<morton_key_type, int> > morton_key_pairs; 
+  point_morton_keys_ = new morton_key_type[tour.cities()];
   for(int i = 0; i < tour.cities(); ++i)
   {
     double x_normalized = ( tour.x(i) - x_min ) / x_range;
@@ -30,13 +31,21 @@ Quadtree::Quadtree(Tour& tour)
     y_normalized = (y_normalized >= 1.0) ? 1.0: y_normalized;
 
     MortonKey morton_key(i, x_normalized, y_normalized);
-    pair<morton_key_type, int> morton_key_pair( morton_key.value(), i );
+    pair<morton_key_type, int> morton_key_pair ( morton_key.value(), i );
+    point_morton_keys_[i] = morton_key.value();
     morton_key_pairs.push_back( morton_key_pair );
   }
   std::sort(morton_key_pairs.begin(), morton_key_pairs.end());
 
+
   // Now we can create the tree (recursively)
-  
+  root_ = new QuadtreeNode( 
+    nullptr, // parent 
+    -1, // quadrant
+    &morton_key_pairs[0], // Morton key pairs (key, point id)
+    tour.cities(), // number of points / morton key pairs
+    tour
+  );
 
 }
 

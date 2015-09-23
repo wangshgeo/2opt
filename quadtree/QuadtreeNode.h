@@ -3,7 +3,9 @@
 
 #include <vector>
 #include <utility>
+#include <algorithm>
 
+#include "Tour.h"
 #include "MortonKey.h"
 
 typedef std::vector<int> id_container;// can contain segment or point 
@@ -15,9 +17,15 @@ class QuadtreeNode
 public:
 	QuadtreeNode(QuadtreeNode* parent__, int quadrant__,
 		std::pair<morton_key_type, int>* morton_key_pairs, 
-		int morton_key_pairs_count);
+		int morton_key_pairs_count, Tour& tour);
 	int tree_level() { return tree_level_; }
-
+	~QuadtreeNode()
+	{
+		for(int i = 0; i < 4; ++i)
+		{
+			if (children_[i] != nullptr) delete children_[i];
+		}
+	}
 private:
 	// Tree location information.
 	QuadtreeNode* parent_;
@@ -27,6 +35,7 @@ private:
  	int tree_level_; // tree level (root = 0).
 	int quadrant_;// The Morton order of this node relative to siblings (0-3). 
 		//For the root, this is -1.
+	bool is_leaf_;
 
 	// Point information.
 	double average_point_location_[2]; // average location of all points under 
@@ -42,6 +51,11 @@ private:
 		// children).
 	int total_segment_count_; // total segments under this node and all child 
 		// nodes.
+
+	void DetermineTreeLevel();
+	void DetermineChildren(pair<morton_key_type, int>* morton_key_pairs, 
+		Tour& tour);
+	void DetermineAveragePointLocations(Tour& tour);
 };
 
 #endif

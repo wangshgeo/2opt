@@ -1,6 +1,9 @@
 #ifndef MORTON_KEY_H_
 #define MORTON_KEY_H_
 
+#include <vector>
+#include <utility>
+
 typedef unsigned int binary_type; // type of the binary representation of each 
   // coordinate.
 typedef unsigned long int morton_key_type; // consists of interleaved 
@@ -34,6 +37,8 @@ private:
     binary_type binary_coordinate1, binary_type binary_coordinate2);
 };
 
+std::vector<morton_key_type> ExtractLeadingQuadrants(
+  morton_key_type node_morton_key, int tree_level);
 
 
 #endif 

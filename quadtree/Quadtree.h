@@ -7,6 +7,7 @@
 
 #include "Tour.h"
 #include "MortonKey.h"
+#include "QuadtreeNode.h"
 
 // The purpose of this class is to handle the generation and sorting of Morton 
 // keys, and quadtree construction.
@@ -16,13 +17,16 @@ public:
   Quadtree(Tour& tour);
   ~Quadtree()
   {
-    delete[] point_morton_keys;
+    delete[] point_morton_keys_;
+    delete root_;
   }
 private:
-  morton_key_type* point_morton_keys; // point morton keys accessible by point 
+  morton_key_type* point_morton_keys_; // point morton keys accessible by point 
     // identifier.
+  QuadtreeNode* root_;
   double minimum(double* x, int length);
   double maximum(double* x, int length);
+  
 };
 
 

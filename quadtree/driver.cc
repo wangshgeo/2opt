@@ -22,6 +22,7 @@
 // #include "segment_serial.h"
 #include "Instance.h"
 #include "Tour.h"
+#include "Quadtree.h"
 #include "QuadtreeNode.h"
 
 using namespace std;
@@ -42,6 +43,8 @@ int main(int argc, char ** argv)
   Instance instance(file_name);
 
   Tour tour(instance);
+
+  Quadtree quadtree(tour);
 
   // long double quadtree_best_improvement_time = 0;
   // Timer timer;
