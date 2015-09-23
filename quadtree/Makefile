@@ -2,11 +2,7 @@ CXX = g++
 CXX_FLAGS = -O3 -g -Wall -std=c++11 -pedantic
 
 SRCS = driver.cc \
-	best_improvement.cc swap.cc \
-	input.cc \
 	Instance.cc Tour.cc MortonKey.cc Quadtree.cc QuadtreeNode.cc
-	# checks.cc morton_serial.cc \
-	# quadtree_serial.cc segment_serial.cc \
 
 
 %.o: %.cc
