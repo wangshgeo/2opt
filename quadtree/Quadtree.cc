@@ -63,6 +63,7 @@ Quadtree::Quadtree(Tour& tour)
     tour
   );
 
+  InsertTourSegments(tour);
 }
 
 
@@ -77,4 +78,49 @@ double Quadtree::maximum(double* x, int length)
   double maximum = x[0];
   for(int i = 0; i < length; ++i) maximum = (x[i] > maximum) ? x[i]: maximum;
   return maximum;
+}
+
+static const morton_key_type MORTON_THREE = static_cast<morton_key_type> (3);
+
+vector<int> Quadtree::MergePointMortonKeys(morton_key_type key1, 
+  morton_key_type key2)
+{
+
+  cout << "Merging: " << endl;
+  cout << bitset<64>(key1).to_string().substr(22) << endl;
+  cout << bitset<64>(key2).to_string().substr(22) << endl;
+  vector<int> traversal;
+  // We skip i = 0 because that would simply lead to root comparison.
+  for(int i = 1; i < MAX_LEVEL; ++i)
+  {
+    morton_key_type level1 = key1 >> 2*(MAX_LEVEL - i - 1);
+    morton_key_type level2 = key2 >> 2*(MAX_LEVEL - i - 1);
+    if (level1 == level2)
+    {
+      int quadrant = static_cast<int>(level1 & MORTON_THREE);
+      traversal.push_back(quadrant);
+      cout << quadrant << endl;
+    }
+  }
+  return traversal;
+}
+
+void Quadtree::InsertSegment(Segment* segment)
+{
+  morton_key_type key1 = point_morton_keys_[segment->start_city];
+  morton_key_type key2 = point_morton_keys_[segment->end_city];
+
+  vector<int> traversal = MergePointMortonKeys(key1, key2);
+  QuadtreeNode* current = root_;
+  for (vector<int>::iterator it=traversal.begin(); it!=traversal.end(); ++it)
+  {
+    if(current->children(*it) == nullptr) break;
+    current = current->children(*it);
+  }
+  current->AddImmediateSegment(segment);
+}
+
+void Quadtree::InsertTourSegments(Tour& tour)
+{
+  for(int i = 0; i < tour.cities(); ++i) InsertSegment(tour.segment(i));
 }

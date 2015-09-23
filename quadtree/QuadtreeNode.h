@@ -8,9 +8,12 @@
 
 #include "Tour.h"
 #include "MortonKey.h"
+#include "Segment.h"
 
 typedef std::vector<int> id_container;// can contain segment or point 
 	// identifiers.
+typedef std::vector<Segment*> segment_container;
+
 
 // This is designed to be called recursively.
 class QuadtreeNode
@@ -27,6 +30,8 @@ public:
 			if (children_[i] != nullptr) delete children_[i];
 		}
 	}
+	QuadtreeNode* children(int index) { return children_[index]; }
+	void AddImmediateSegment(Segment* segment);
 	void Print();
 private:
 	// Tree location information.
@@ -49,7 +54,7 @@ private:
 	int total_point_count_; // points under this node.
 
 	// Segment information.
-	id_container immediate_segments_; // segments under this node only (not 
+	segment_container immediate_segments_; // segments under this node only (not 
 		// children).
 	int total_segment_count_; // total segments under this node and all child 
 		// nodes.
@@ -58,6 +63,8 @@ private:
 	void DetermineChildren(pair<morton_key_type, int>* morton_key_pairs, 
 		Tour& tour);
 	void DetermineAveragePointLocations(Tour& tour);
+	void ModifyTotalSegmentCount(int amount);
+	void DeleteImmediateSegment(segment_container::iterator it);
 };
 
 #endif

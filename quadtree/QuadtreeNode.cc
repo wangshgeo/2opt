@@ -159,6 +159,8 @@ void QuadtreeNode::Print()
   cout << tabs << "Total Number of Points: " << total_point_count_ << endl;
   cout << tabs << "Average Point Center: " << average_point_location_[0]
     << ", " << average_point_location_[1] << endl;
+  cout << tabs << "Total Number of Segments: " << total_segment_count_ << endl;
+  cout << tabs << "Immediate Segments: " << immediate_segments_.size() << endl;
   cout << tabs << "Is leaf: " << is_leaf_ << endl;
   cout << endl;
   for(int i = 0; i < 4; ++i)
@@ -169,7 +171,23 @@ void QuadtreeNode::Print()
 
 
 
+void QuadtreeNode::ModifyTotalSegmentCount(int amount)
+{
+  total_segment_count_ += amount;
+  if(parent_ != nullptr) parent_->ModifyTotalSegmentCount(amount);
+}
 
+
+void QuadtreeNode::AddImmediateSegment(Segment* segment)
+{ 
+  immediate_segments_.push_back(segment);
+  ModifyTotalSegmentCount(1);
+}
+void QuadtreeNode::DeleteImmediateSegment(segment_container::iterator it)
+{ 
+  immediate_segments_.erase(it);
+  ModifyTotalSegmentCount(-1);
+}
 
 
 

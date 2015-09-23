@@ -40,7 +40,9 @@ int main(int argc, char ** argv)
 
   Quadtree quadtree(tour);
 
-  // quadtree.Print();
+  
+
+  quadtree.Print();
 
   // long double quadtree_best_improvement_time = 0;
   // Timer timer;

@@ -26,12 +26,12 @@ public:
   double* y() { return y_; }
   double x(int i) { return x_[i]; }
   double y(int i) { return y_[i]; }
+  Segment* segment(int index) { return &segments_[index]; }
   void Swap(Segment& first_deleted, Segment& second_deleted);
   ~Tour()
   {
     delete[] segments_;
   }
-
   void SerialCheck();
   void Check();
 private:
