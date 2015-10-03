@@ -96,6 +96,8 @@ cost_t point_distance(const int n1, const int n2, const dtype*x, const dtype*y)
 	return ( (cost_t) sqrt(dx*dx+dy*dy) );
 }
 
+// This table is actually symmetric, so the storage space can be made half 
+// the current implementation size.
 void fill_distance_table(cost_t* dtable, const dtype* x, const dtype* y, const int n)
 {
 	for(int i=0;i<n;++i)
