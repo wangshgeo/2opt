@@ -1,6 +1,8 @@
 #ifndef SMART_OPT_H_
 #define SMART_OPT_H_
 
+#include <iostream>
+
 #include "Tour.h"
 #include "Quadtree.h"
 #include "QuadtreeNode.h"
@@ -27,6 +29,10 @@ public:
   }
   // This finds and stores the best swap in swap_candidate.
   void FindBestSwap();
+  SwapCandidate swap_candidate() { return swap_candidate_; }
+  void PrintSwapCandidate();
+  // Performs a swap based on what is currently in the swap_candidate_.
+  void PerformSwap();
 private:
   Quadtree* quadtree_;
   Tour* tour_;

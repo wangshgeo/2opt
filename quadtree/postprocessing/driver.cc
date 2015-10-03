@@ -1,38 +1,32 @@
 #include <cstdlib>
 #include <fstream>
 #include <string>
+#include <iostream>
 
 #include "CImg.h"
-#include "types.hh"
-#include "image.hh"
+#include "image.h"
+
+#include "../Instance.h"
+
+using namespace std;
 
 int main(int argc,char**argv)
 {
-	fprintf(stdout, "Locating data from '../output.txt'... ");
-	std::string timestep_file("../output.txt");
-	std::ifstream infile(timestep_file.c_str());
-	if(infile.peek() == std::ifstream::traits_type::eof())
+	if(argc < 2)
 	{
-		fprintf(stdout, "\nCould not locate the file. Exiting.\n");
+		cout << "Please input a file name." << endl;
 		return EXIT_SUCCESS;
 	}
-	fprintf(stdout, "Done.\n");
+	string file_name(argv[1]);
 
-	int n = 0;
-	infile >> n;
-	fprintf(stdout, "Number of bodies: %d\n",n);
+	Instance instance(file_name);
 
-	dtype* x = new dtype[n];
-	dtype* y = new dtype[n];
+	fprintf(stdout, "Number of bodies: %d\n", instance.cities());
 
-	for(int i=0;i<n;++i) infile >> x[i] >> y[i];
+	double* x = instance.x();
+	double* y = instance.y();
 
-	write_static_image(x,y,n);
+	write_static_image(x,y,instance.cities());
 	
-	fprintf(stdout, "Done reading file.\n");
-
-	delete[] x;
-	delete[] y;
-
 	return EXIT_SUCCESS;
 }

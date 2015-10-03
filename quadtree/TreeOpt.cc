@@ -1,5 +1,7 @@
 #include "TreeOpt.h"
 
+using namespace std;
+
 void TreeOpt::EvaluateImmediateSegments(QuadtreeNode* node, Segment& segment)
 {
   if(node->immediate_segment_count() > 0)
@@ -62,4 +64,25 @@ void TreeOpt::FindBestSwap()
   {
     EvaluateNode(quadtree_->root(),*(tour_->segment(i)));
   }
+}
+
+void TreeOpt::PrintSwapCandidate()
+{
+  cout << "Swap Candidate:" << endl;
+  cout << "\tSegments: " << swap_candidate_.segment1->order 
+    << ", " << swap_candidate_.segment2->order << endl;
+  cout << "\tCost: " << swap_candidate_.swap_cost << endl;
+}
+
+
+void TreeOpt::PerformSwap()
+{
+  Segment* segment1 = swap_candidate_.segment1;
+  Segment* segment2 = swap_candidate_.segment2;
+  segment1->node->DeleteImmediateSegment( segment1 );
+  segment2->node->DeleteImmediateSegment( segment2 );
+  // TODO: Delete and reinsert segments in the quadtree.
+  tour_->Swap( *segment1, *segment2 );
+  quadtree_->InsertSegment( segment1 );
+  quadtree_->InsertSegment( segment2 );
 }

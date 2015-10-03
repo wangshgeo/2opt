@@ -118,6 +118,7 @@ void Quadtree::InsertSegment(Segment* segment)
     current = current->children(*it);
   }
   current->AddImmediateSegment(segment);
+  segment->node = current;
 }
 
 void Quadtree::InsertTourSegments(Tour& tour)

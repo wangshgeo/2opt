@@ -41,9 +41,13 @@ int main(int argc, char ** argv)
 
   Quadtree quadtree(tour);
 
-  quadtree.Print();
+  // quadtree.Print();
 
+  TreeOpt solver(&quadtree, &tour);
 
+  solver.FindBestSwap();
+  solver.PrintSwapCandidate();
+  solver.PerformSwap();
 
   // long double quadtree_best_improvement_time = 0;
   // Timer timer;

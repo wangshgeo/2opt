@@ -39,7 +39,7 @@ public:
 private:
   int cities_; // number of cities.
   double *x_,*y_; // city coordinates, x[city_index], y[city_index]
-  Segment* segments_; // the tour path is represented as a series of 
+  Segment* segments_; // the tour path is represented as collection of 
     // ordered segments.
   void InitializeSegments();
   void reverse_segment(Segment& interior, 

@@ -41,6 +41,7 @@ public:
 	}
 	void AddImmediateSegment(Segment* segment);
 	void Print();
+	void DeleteImmediateSegment(Segment* segment);
 private:
 	// Tree location information.
 	QuadtreeNode* parent_;

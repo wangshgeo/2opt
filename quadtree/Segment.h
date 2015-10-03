@@ -1,6 +1,8 @@
 #ifndef SEGMENT_H_
 #define SEGMENT_H_
 
+class QuadtreeNode;
+
 typedef long int cost_t;
 
 // This represents a path segment between two adjacent cities.
@@ -15,6 +17,9 @@ public:
   // The coordinates of the bisecting point.
   double center_x;
   double center_y;
+  // The quadtree node at which the segment resides.
+  QuadtreeNode *node;
+  Segment();
 };
 
 #endif

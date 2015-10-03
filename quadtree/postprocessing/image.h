@@ -4,7 +4,6 @@
 #include <string>
 
 #include "CImg.h"
-#include "types.hh"
 
 using namespace cimg_library;
 
@@ -15,5 +14,5 @@ using namespace cimg_library;
 
 
 
-void write_static_image(const dtype*x, const dtype*y, const int n );
+void write_static_image(const double*x, const double*y, const int n );
 

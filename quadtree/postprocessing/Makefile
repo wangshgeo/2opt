@@ -1,7 +1,7 @@
 CC = c++
 FLAGS = -O3 -g -Wall -lX11 -lpthread
 
-SRCS = driver.cc image.cc
+SRCS = driver.cc image.cc ../Instance.cc
 OBJS = $(SRCS:.cc=.o)
 
 %.o: %.cc

@@ -185,8 +185,17 @@ void QuadtreeNode::AddImmediateSegment(Segment* segment)
   immediate_segments_.push_back(segment);
   ModifyTotalSegmentCount(1);
 }
+
 void QuadtreeNode::DeleteImmediateSegment(segment_container::iterator it)
 { 
+  immediate_segments_.erase(it);
+  ModifyTotalSegmentCount(-1);
+}
+
+void QuadtreeNode::DeleteImmediateSegment(Segment* segment)
+{ 
+  segment_container::iterator it
+    = find(immediate_segments_.begin(), immediate_segments_.end(), segment);
   immediate_segments_.erase(it);
   ModifyTotalSegmentCount(-1);
 }
