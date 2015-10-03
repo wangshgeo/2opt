@@ -41,42 +41,56 @@ best_improvement ( int* i_best, int* j_best, cost_t *cost_best,
 			int jj = map[j];
 			int nextii = map[i+1];
 			int nextjj = ( j == n-1 ) ? map[0] : map[j+1];
-			cost_t new_cost = dtable[ii*n + jj] + dtable[nextii*n + nextjj];
 			cost_t old_cost = dtable[ii*n + nextii] + dtable[jj*n + nextjj];
-			cost_t cost_current = new_cost - old_cost;
-			// cost_t std_new = total_new_length(i,j,x,y,n);
-			// cost_t std_old = segment_length(i,x,y,n) + segment_length(j,x,y,n);
-			// if(new_cost != std_new)
-			// {
-			// 	fprintf(stdout, "new_cost does not match! %ld vs %ld\n", new_cost, std_new);
-			// 	fprintf(stdout, "i = %d segment compare: %ld vs %ld\n", i, dtable[ii*n + ii+1], segment_length(i,x,y,n));
-			// 	fprintf(stdout, "j = %d segment compare: %ld vs %ld\n", j, dtable[jj*n + nextjj], segment_length(j,x,y,n));
-			// 	std::cin.ignore();
-			// }
-			// if(old_cost != std_old)
-			// {
-			// 	fprintf(stdout, "old_cost does not match! %ld vs %ld\n", old_cost, std_old);
-			// 	std::cin.ignore();
-			// }
-			
-			// if(i == 3499 and j == 4271)
-			// {
-			// 	fprintf(stdout, "\n");
-			// 	fprintf(stdout, "\t%d and %d\n", i, j);
-			// 	fprintf(stdout, "\t%d and %d\n", ii, jj);
-			// 	fprintf(stdout, "\t\tnew_cost: %ld\n", new_cost);
-			// 	fprintf(stdout, "\t\told_cost: %ld\n", old_cost);
-			// 	fprintf(stdout, "\t\t\told segments: %ld, %ld\n", 
-			// 		dtable[ii*n + nextii], dtable[jj*n + nextjj]);
-			// 	fprintf(stdout, "\t\tcost: %ld\n", cost_current);
-			// }
-			if(cost_current < *cost_best)
+			if( -old_cost <  *cost_best )
 			{
-				*cost_best = cost_current;
-				*i_best = i;
-				*j_best = j;
-				// best_new_cost = new_cost;
-				// best_old_cost = old_cost;
+				cost_t new_cost = dtable[ii*n + jj] + dtable[nextii*n + nextjj];
+				cost_t cost_current = new_cost - old_cost;
+				// cost_t std_new = total_new_length(i,j,x,y,n);
+				// cost_t std_old = segment_length(i,x,y,n) + segment_length(j,x,y,n);
+				// if(new_cost != std_new)
+				// {
+				// 	fprintf(stdout, "new_cost does not match! %ld vs %ld\n", new_cost, std_new);
+				// 	fprintf(stdout, "i = %d segment compare: %ld vs %ld\n", i, dtable[ii*n + ii+1], segment_length(i,x,y,n));
+				// 	fprintf(stdout, "j = %d segment compare: %ld vs %ld\n", j, dtable[jj*n + nextjj], segment_length(j,x,y,n));
+				// 	std::cin.ignore();
+				// }
+				// if(old_cost != std_old)
+				// {
+				// 	fprintf(stdout, "old_cost does not match! %ld vs %ld\n", old_cost, std_old);
+				// 	std::cin.ignore();
+				// }
+				
+				// if(i == 3499 and j == 4271)
+				// {
+				// 	fprintf(stdout, "\n");
+				// 	fprintf(stdout, "\t%d and %d\n", i, j);
+				// 	fprintf(stdout, "\t%d and %d\n", ii, jj);
+				// 	fprintf(stdout, "\t\tnew_cost: %ld\n", new_cost);
+				// 	fprintf(stdout, "\t\told_cost: %ld\n", old_cost);
+				// 	fprintf(stdout, "\t\t\told segments: %ld, %ld\n", 
+				// 		dtable[ii*n + nextii], dtable[jj*n + nextjj]);
+				// 	fprintf(stdout, "\t\tcost: %ld\n", cost_current);
+				// }
+
+				// if( i == 4959 and j == 5154 )
+				// {
+				// 	fprintf(stdout, "\n");
+				// 	fprintf(stdout, "\t%d and %d\n", i, j);
+				// 	fprintf(stdout, "\t\tnew_cost: %ld\n", new_cost);
+				// 	fprintf(stdout, "\t\told_cost: %ld\n", old_cost);
+				// 	fprintf(stdout, "\t\t\told segments: %ld, %ld\n", 
+				// 		dtable[ii*n + nextii], dtable[jj*n + nextjj]);
+				// 	fprintf(stdout, "\t\tcost: %ld\n", cost_current);
+				// }
+				if(cost_current < *cost_best)
+				{
+					*cost_best = cost_current;
+					*i_best = i;
+					*j_best = j;
+					// best_new_cost = new_cost;
+					// best_old_cost = old_cost;
+				}
 			}
 		}
 	}

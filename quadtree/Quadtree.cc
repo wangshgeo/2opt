@@ -54,7 +54,7 @@ Quadtree::Quadtree(Tour& tour)
   std::sort(morton_key_pairs.begin(), morton_key_pairs.end());
 
   // Let's make the tour a Morton-order tour!
-  MakeMortonTour(morton_key_pairs, tour);
+  // MakeMortonTour(morton_key_pairs, tour);
 
   // Now we can create the tree (recursively)
   root_ = new QuadtreeNode( 

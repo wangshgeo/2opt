@@ -23,7 +23,7 @@ public:
     delete root_;
   }
   QuadtreeNode* root() { return root_; }
-  void Print() { root_->Print(); }
+  void Print(int max_level) { root_->Print(max_level); }
   void InsertSegment(Segment* segment);
 private:
   morton_key_type* point_morton_keys_; // point morton keys accessible by point 

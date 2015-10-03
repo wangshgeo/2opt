@@ -6,6 +6,9 @@
 #include "Tour.h"
 #include "Quadtree.h"
 #include "QuadtreeNode.h"
+#ifdef _OPENMP
+  #include <omp.h>
+#endif
 
 typedef struct SwapCandidate
 {
@@ -32,13 +35,16 @@ public:
   SwapCandidate swap_candidate() { return swap_candidate_; }
   void PrintSwapCandidate();
   // Performs a swap based on what is currently in the swap_candidate_.
-  void PerformSwap();
+  bool PerformSwap();
+  Segment* PrintSegment(int order);
 private:
   Quadtree* quadtree_;
   Tour* tour_;
   SwapCandidate swap_candidate_;
-  void EvaluateNode(QuadtreeNode* node, Segment& segment);
-  void EvaluateImmediateSegments(QuadtreeNode* node, Segment& segment);
+  void EvaluateNode(QuadtreeNode* node, Segment& segment, 
+    SwapCandidate& candidate);
+  void EvaluateImmediateSegments(QuadtreeNode* node, Segment& segment, 
+    SwapCandidate& candidate);
   void ResetSwapCandidate();
 };
 

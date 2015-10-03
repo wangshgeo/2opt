@@ -1,5 +1,5 @@
 CXX = g++
-CXX_FLAGS = -O3 -g -Wall -std=c++11 -pedantic
+CXX_FLAGS = -O3 -g -Wall -std=c++11 -pedantic -fopenmp
 
 SRCS = driver.cc \
 	Instance.cc Tour.cc MortonKey.cc Quadtree.cc QuadtreeNode.cc \

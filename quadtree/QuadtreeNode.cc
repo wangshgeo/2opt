@@ -11,7 +11,8 @@ QuadtreeNode::QuadtreeNode(QuadtreeNode* parent__, int quadrant__,
   quadrant_(quadrant__),
   diameter_(0),
   total_point_count_(morton_key_pairs_count),
-  total_segment_count_(0)
+  total_segment_count_(0),
+  max_segment_length_(0)
 {
   DetermineTreeLevel();
 
@@ -25,6 +26,8 @@ QuadtreeNode::QuadtreeNode(QuadtreeNode* parent__, int quadrant__,
   DetermineAveragePointLocations(tour);
 
   ComputeDiameter(morton_key_pairs, tour);
+
+  ComputeMaxSegmentLength();
 }
 
 void QuadtreeNode::DetermineTreeLevel()
@@ -150,24 +153,27 @@ void QuadtreeNode::DetermineAveragePointLocations(Tour& tour)
 }
 
 
-void QuadtreeNode::Print()
+void QuadtreeNode::Print(int max_level)
 {
-  string tabs("");
-  for(int i = 0; i < tree_level_; ++i) tabs+="\t";
-  cout << endl;
-  cout << tabs << "Tree level: " << tree_level_ << endl;
-  cout << tabs << "Quadrant: " << quadrant_ << endl;
-  cout << tabs << "Total Number of Points: " << total_point_count_ << endl;
-  cout << tabs << "Average Point Center: " << average_point_location_[0]
-    << ", " << average_point_location_[1] << endl;
-  cout << tabs << "Diameter: " << diameter_ << endl;
-  cout << tabs << "Total Number of Segments: " << total_segment_count_ << endl;
-  cout << tabs << "Immediate Segments: " << immediate_segments_.size() << endl;
-  cout << tabs << "Is leaf: " << is_leaf_ << endl;
-  cout << endl;
-  for(int i = 0; i < 4; ++i)
+  if(tree_level_ <= max_level)
   {
-    if(children_[i] != nullptr) children_[i]->Print();
+    string tabs("");
+    for(int i = 0; i < tree_level_; ++i) tabs+="\t";
+    cout << endl;
+    cout << tabs << "Tree level: " << tree_level_ << endl;
+    cout << tabs << "Quadrant: " << quadrant_ << endl;
+    cout << tabs << "Total Number of Points: " << total_point_count_ << endl;
+    cout << tabs << "Average Point Center: " << average_point_location_[0]
+      << ", " << average_point_location_[1] << endl;
+    cout << tabs << "Diameter: " << diameter_ << endl;
+    cout << tabs << "Total Number of Segments: " << total_segment_count_ << endl;
+    cout << tabs << "Immediate Segments: " << immediate_segments_.size() << endl;
+    cout << tabs << "Is leaf: " << is_leaf_ << endl;
+    cout << endl;
+    for(int i = 0; i < 4; ++i)
+    {
+      if(children_[i] != nullptr) children_[i]->Print(max_level);
+    }
   }
 }
 
@@ -220,6 +226,27 @@ void QuadtreeNode::ComputeDiameter(
   diameter_ = 2 * sqrt(max_square);
 }
 
+void QuadtreeNode::ComputeMaxSegmentLength()
+{
+  for(segment_container::iterator it = immediate_segments_.begin();
+    it != immediate_segments_.end(); ++it)
+  {
+    if ((*it)->length > max_segment_length_)
+    {
+      max_segment_length_ = (*it)->length;
+    }
+  }
+  for(int i = 0; i < 4; ++i)
+  {
+    if(children_[i] != nullptr)
+    {
+      if(children_[i]->max_segment_length_ > max_segment_length_)
+      {
+        max_segment_length_ = children_[i]->max_segment_length_;
+      }
+    }
+  }
+}
 
 // void remove_extreme_point_and_readjust(Node* root, const int direction, 
 //  const dtype*x, const dtype*y);

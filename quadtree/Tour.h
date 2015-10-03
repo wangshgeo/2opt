@@ -33,6 +33,7 @@ public:
   Segment* segment(int index) { return &segments_[index]; }
   void Swap(Segment& first_deleted, Segment& second_deleted);
   cost_t SwapCost(Segment& s1, Segment& s2);
+  cost_t SwapCost(Segment& s1, Segment& s2, cost_t old_cost);
   bool adjacent_segments(Segment& s1, Segment& s2);
   ~Tour()
   {

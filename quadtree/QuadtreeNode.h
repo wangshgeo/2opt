@@ -40,8 +40,10 @@ public:
 		return average_point_location_[index];
 	}
 	void AddImmediateSegment(Segment* segment);
-	void Print();
+	void Print(int max_level = MAX_LEVEL);
 	void DeleteImmediateSegment(Segment* segment);
+	int quadrant() { return quadrant_; }
+	cost_t max_segment_length() { return max_segment_length_; }
 private:
 	// Tree location information.
 	QuadtreeNode* parent_;
@@ -67,6 +69,8 @@ private:
 		// children).
 	int total_segment_count_; // total segments under this node and all child 
 		// nodes.
+	cost_t max_segment_length_; // The maximum segment length of all segments 
+		// under this node (both immediate and child segments).
 
 	void DetermineTreeLevel();
 	void DetermineChildren(pair<morton_key_type, int>* morton_key_pairs, 
@@ -76,6 +80,7 @@ private:
 	void DeleteImmediateSegment(segment_container::iterator it);
 	void ComputeDiameter(pair<morton_key_type, int>* morton_key_pairs, 
 		Tour& tour);
+	void ComputeMaxSegmentLength();
 };
 
 #endif

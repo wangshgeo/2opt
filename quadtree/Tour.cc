@@ -54,7 +54,7 @@ void Tour::InitializeSegments()
 }
 
 // This is to be called on segments between deleted segments in the event of a 
-// swap. The order will change, but not the length.
+// swap. The order will change, but not the length or center coordinates.
 void Tour::reverse_segment(Segment& interior, 
   Segment& first_deleted, Segment& second_deleted)
 {
@@ -82,11 +82,19 @@ void Tour::renew_segment(Segment& segment,
   segment.end_city = new_end_city;
   segment.length = Cost(new_end_city, new_start_city);
   segment.node = nullptr;
+  segment.center_x = (x_[new_start_city] + x_[new_end_city]) / 2.0;
+  segment.center_y = (y_[new_start_city] + y_[new_end_city]) / 2.0;
 }
 
 cost_t Tour::SwapCost(Segment& s1, Segment& s2)
 {
   cost_t old_cost = s1.length + s2.length;
+  cost_t new_cost = Cost(s1.start_city, s2.start_city)
+    + Cost(s1.end_city, s2.end_city);
+  return new_cost - old_cost;
+}
+cost_t Tour::SwapCost(Segment& s1, Segment& s2, cost_t old_cost)
+{
   cost_t new_cost = Cost(s1.start_city, s2.start_city)
     + Cost(s1.end_city, s2.end_city);
   return new_cost - old_cost;
