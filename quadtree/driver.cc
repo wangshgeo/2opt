@@ -22,7 +22,7 @@
 
 using namespace std;
 
-#define ITERATIONS 1 // Maximum number of 2-opt iterations.
+#define ITERATIONS 10 // Maximum number of 2-opt iterations.
 
 int main(int argc, char ** argv)
 {
@@ -54,11 +54,13 @@ int main(int argc, char ** argv)
   for(int i =0; i<ITERATIONS;++i)
   {
     cout << "Iteration " << i+1 << " / " << ITERATIONS << endl;
-    timer.start();
-    solver.FindBestSwap();
-    quadtree_best_improvement_time += timer.stop();
-    solver.PrintSwapCandidate();
-    solver.PerformSwap();
+    // timer.start();
+    // solver.FindBestSwap();
+    // quadtree_best_improvement_time += timer.stop();
+    // solver.PrintSwapCandidate();
+    // solver.PerformSwap();
+
+    tour.SerialCheck();
 
     tour.Check();
 

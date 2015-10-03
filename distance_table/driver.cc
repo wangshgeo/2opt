@@ -71,7 +71,7 @@ int main(int argc, char ** argv)
 	{
 		// if((i % REFRESH) == 0)
 		// {
-			check_valid_tour(ordered_x,ordered_y,nc,x,y);
+		//	check_valid_tour(ordered_x,ordered_y,nc,x,y);
 		// 	int tour_length = compute_tour_length(x,y,nc);
 		// 	fprintf(stdout, "%d\t%d\n",i,tour_length);
 		// }
@@ -99,6 +99,7 @@ int main(int argc, char ** argv)
 	delete[] ordered_x;
 	delete[] ordered_y;
 	delete[] dtable;
+	delete[] map;
 
 	return EXIT_SUCCESS;
 }
