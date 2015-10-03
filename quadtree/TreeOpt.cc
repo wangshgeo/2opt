@@ -90,7 +90,7 @@ void TreeOpt::FindBestSwap()
   ResetSwapCandidate();
   #ifdef _OPENMP
     // Parallel version
-    int CHUNKS = omp_get_num_procs();
+    int CHUNKS = 2*omp_get_num_procs();
     // cout << "omp_get_num_procs: " << omp_get_num_procs() << endl;
     // cout << "omp_get_max_threads: " << omp_get_max_threads() << endl;
     int elements_per_chunk = ( tour_->cities() + CHUNKS - 1 ) / CHUNKS;
