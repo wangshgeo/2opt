@@ -5,7 +5,6 @@ SRCS = driver.cc \
 	Instance.cc Tour.cc MortonKey.cc Quadtree.cc QuadtreeNode.cc \
 	TreeOpt.cc Segment.cc
 
-
 %.o: %.cc
 	$(CXX) $(CXX_FLAGS) -o $@ -c $<
 

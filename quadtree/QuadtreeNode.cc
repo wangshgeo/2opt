@@ -196,7 +196,10 @@ void QuadtreeNode::DeleteImmediateSegment(Segment* segment)
 { 
   segment_container::iterator it
     = find(immediate_segments_.begin(), immediate_segments_.end(), segment);
+  // cout << "Size:" << endl;  
+  // cout << immediate_segments_.size() << endl;
   immediate_segments_.erase(it);
+  // cout << immediate_segments_.size() << endl;
   ModifyTotalSegmentCount(-1);
 }
 

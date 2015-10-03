@@ -39,6 +39,7 @@ private:
   SwapCandidate swap_candidate_;
   void EvaluateNode(QuadtreeNode* node, Segment& segment);
   void EvaluateImmediateSegments(QuadtreeNode* node, Segment& segment);
+  void ResetSwapCandidate();
 };
 
 

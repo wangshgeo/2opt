@@ -81,6 +81,7 @@ void Tour::renew_segment(Segment& segment,
   segment.start_city = new_start_city;
   segment.end_city = new_end_city;
   segment.length = Cost(new_end_city, new_start_city);
+  segment.node = nullptr;
 }
 
 cost_t Tour::SwapCost(Segment& s1, Segment& s2)

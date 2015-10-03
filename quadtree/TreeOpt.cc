@@ -60,6 +60,7 @@ void TreeOpt::EvaluateNode(QuadtreeNode* node, Segment& segment)
 
 void TreeOpt::FindBestSwap()
 {
+  ResetSwapCandidate();
   for(int i = 0; i < tour_->cities(); ++i)
   {
     EvaluateNode(quadtree_->root(),*(tour_->segment(i)));
@@ -81,8 +82,14 @@ void TreeOpt::PerformSwap()
   Segment* segment2 = swap_candidate_.segment2;
   segment1->node->DeleteImmediateSegment( segment1 );
   segment2->node->DeleteImmediateSegment( segment2 );
-  // TODO: Delete and reinsert segments in the quadtree.
   tour_->Swap( *segment1, *segment2 );
   quadtree_->InsertSegment( segment1 );
   quadtree_->InsertSegment( segment2 );
+}
+
+void TreeOpt::ResetSwapCandidate()
+{
+  swap_candidate_.segment1 = nullptr;
+  swap_candidate_.segment2 = nullptr;
+  swap_candidate_.swap_cost = 0;
 }
