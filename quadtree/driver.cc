@@ -22,7 +22,7 @@
 
 using namespace std;
 
-#define ITERATIONS 10 // Maximum number of 2-opt iterations.
+#define ITERATIONS 1 // Maximum number of 2-opt iterations.
 
 int main(int argc, char ** argv)
 {
@@ -41,6 +41,8 @@ int main(int argc, char ** argv)
 
   Quadtree quadtree(tour);
 
+  tour.OutputFile("usa13509_morton.tsp");
+
   // quadtree.Print();
 
   TreeOpt solver(&quadtree, &tour);
@@ -48,15 +50,19 @@ int main(int argc, char ** argv)
   long double quadtree_best_improvement_time = 0;
   Timer timer;
 
-  cout << "Running iterations: " << endl;
+  cout << "Running iterations: " << endl << endl;
   for(int i =0; i<ITERATIONS;++i)
   {
-    cout << "\tIteration " << i+1 << " / " << ITERATIONS << endl;
+    cout << "Iteration " << i+1 << " / " << ITERATIONS << endl;
     timer.start();
     solver.FindBestSwap();
     quadtree_best_improvement_time += timer.stop();
     solver.PrintSwapCandidate();
     solver.PerformSwap();
+
+    tour.Check();
+
+    cout << endl;
   }
   cout << endl;
 

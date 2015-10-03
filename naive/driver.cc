@@ -9,7 +9,7 @@
 #include "best_improvement.hh"
 #include "swap.hh"
 
-#define ITERATIONS 3
+#define ITERATIONS 10
 #define REFRESH 1
 
 int main(int argc, char ** argv)
@@ -34,7 +34,7 @@ int main(int argc, char ** argv)
 	int *h_initialTour;
 	h_initialTour = new int[nc];
 	for(int i=0;i<nc;++i) h_initialTour[i] = i;
-	random_shuffle(h_initialTour,h_initialTour+nc);
+	// random_shuffle(h_initialTour,h_initialTour+nc);
 	fprintf(stdout,"Done.\n");
 	
 	fprintf(stdout,"Initializing (Host) Coordinates... ");
@@ -80,7 +80,8 @@ int main(int argc, char ** argv)
 		swap(i_best, j_best, x, y);
 		flip_time += stopwatch_stop(flip);
 
-		fprintf(stdout, "Iteration %d improvement: %ld\n", i, cost);
+		fprintf(stdout, "Iteration %d improvement: %ld (%d, %d)\n", i, cost, 
+			i_best, j_best);
 	}
 	fprintf(stdout,"\nDone.\n");
 

@@ -35,6 +35,8 @@ private:
   // void InsertTourSegments(Tour& tour);
   vector<int> MergePointMortonKeys(morton_key_type key1, morton_key_type key2);
   void InsertTourSegments(Tour& tour);
+  void MakeMortonTour(
+  vector< pair<morton_key_type, int> >& morton_key_pairs, Tour& tour);
 };
 
 

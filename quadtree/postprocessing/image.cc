@@ -1,6 +1,7 @@
 #include "image.h"
 
-void write_static_image(const double*x, const double*y, const int n )
+void write_static_image(std::string output_file_name,
+	const double*x, const double*y, const int n )
 {
 	CImg<float> image(IMAGE_SIZE,IMAGE_SIZE,1,3,0);
 	const float color[] = {255,255,255};
@@ -40,12 +41,12 @@ void write_static_image(const double*x, const double*y, const int n )
 		image.draw_circle(px,py,BODY_RADIUS,color);
 		char num[100];
 		sprintf ( num, "%d", i+1 );
-		image.draw_text(px,py,num,color);
+		// image.draw_text(px,py,num,color);
 		int px_next = (x[(i+1) % n] - xmin) / xrange * IMAGE_SIZE;
 		int py_next = IMAGE_SIZE - (y[(i+1) % n] - ymin) / yrange * IMAGE_SIZE;
 		image.draw_line(px,py,px_next,py_next,color);
 	}
 
-	std::string prefix("output/tour.png");
+	std::string prefix("output/"+output_file_name+".png");
 	image.save(prefix.c_str());
 }

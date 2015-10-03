@@ -53,6 +53,8 @@ Quadtree::Quadtree(Tour& tour)
   }
   std::sort(morton_key_pairs.begin(), morton_key_pairs.end());
 
+  // Let's make the tour a Morton-order tour!
+  MakeMortonTour(morton_key_pairs, tour);
 
   // Now we can create the tree (recursively)
   root_ = new QuadtreeNode( 
@@ -124,4 +126,25 @@ void Quadtree::InsertSegment(Segment* segment)
 void Quadtree::InsertTourSegments(Tour& tour)
 {
   for(int i = 0; i < tour.cities(); ++i) InsertSegment(tour.segment(i));
+}
+
+void Quadtree::MakeMortonTour(
+  vector< pair<morton_key_type, int> >& morton_key_pairs, Tour& tour)
+{
+  double* x = tour.x();
+  double* y = tour.y();
+  double* x_buffer = new double[tour.cities()];
+  double* y_buffer = new double[tour.cities()];
+  std::copy( x, x+tour.cities(), x_buffer );
+  std::copy( y, y+tour.cities(), y_buffer );
+  for( int i = 0; i < tour.cities(); ++i )
+  {
+    int city = morton_key_pairs[i].second;
+    x[i] = x_buffer[city];
+    y[i] = y_buffer[city];
+  }
+  tour.InitializeSegments();
+
+  delete[] x_buffer;
+  delete[] y_buffer;
 }

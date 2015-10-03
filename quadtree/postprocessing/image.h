@@ -14,5 +14,6 @@ using namespace cimg_library;
 
 
 
-void write_static_image(const double*x, const double*y, const int n );
+void write_static_image(std::string output_file_name,
+  const double*x, const double*y, const int n );
 

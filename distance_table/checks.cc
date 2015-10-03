@@ -31,6 +31,7 @@ void check_valid_tour(const dtype* x_original, const dtype* y_original,
 		}
 	}
 	delete[] checklist;
+	fprintf(stdout, "Valid tour.\n");
 }
 
 int compute_tour_length(const dtype*x, const dtype*y, const int nc)

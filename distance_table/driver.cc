@@ -71,7 +71,7 @@ int main(int argc, char ** argv)
 	{
 		// if((i % REFRESH) == 0)
 		// {
-		// 	check_valid_tour(ordered_x,ordered_y,nc,x,y);
+			check_valid_tour(ordered_x,ordered_y,nc,x,y);
 		// 	int tour_length = compute_tour_length(x,y,nc);
 		// 	fprintf(stdout, "%d\t%d\n",i,tour_length);
 		// }
@@ -93,7 +93,8 @@ int main(int argc, char ** argv)
 	}
 	fprintf(stdout,"\nDone.\n");
 
-	fprintf(stdout, "Average best-improvement search time: %Le\n", best_improvement_time / ITERATIONS );
+	fprintf(stdout, "Average best-improvement search time: %Le\n", 
+		best_improvement_time / ITERATIONS );
 
 	delete[] ordered_x;
 	delete[] ordered_y;

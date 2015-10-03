@@ -70,8 +70,8 @@ void TreeOpt::FindBestSwap()
 void TreeOpt::PrintSwapCandidate()
 {
   cout << "Swap Candidate:" << endl;
-  cout << "\tSegments: " << swap_candidate_.segment1->order 
-    << ", " << swap_candidate_.segment2->order << endl;
+  cout << "\tSegments: " << swap_candidate_.segment1->order; 
+  cout << ", " << swap_candidate_.segment2->order << endl;
   cout << "\tCost: " << swap_candidate_.swap_cost << endl;
 }
 

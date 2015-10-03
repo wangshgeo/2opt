@@ -17,6 +17,8 @@ int main(int argc,char**argv)
 		cout << "Please input a file name." << endl;
 		return EXIT_SUCCESS;
 	}
+	string output_name("tour");
+	if(argc > 2) output_name = argv[2];
 	string file_name(argv[1]);
 
 	Instance instance(file_name);
@@ -26,7 +28,7 @@ int main(int argc,char**argv)
 	double* x = instance.x();
 	double* y = instance.y();
 
-	write_static_image(x,y,instance.cities());
+	write_static_image(output_name, x, y, instance.cities());
 	
 	return EXIT_SUCCESS;
 }

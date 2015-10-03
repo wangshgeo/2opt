@@ -164,3 +164,17 @@ void Tour::Check()
   }
   delete[] visited;
 }
+
+void Tour::OutputFile(string file_name)
+{
+  ofstream stream;
+  stream.open(file_name.c_str());
+  stream << "DIMENSION: " << cities_ << endl;
+  stream << "NODE_COORD_SECTION" << endl;
+  stream << std::fixed << std::setprecision(5);
+  for(int i = 0; i < cities_; ++i)
+  {
+    stream << i+1 << " " << x_[i] << " " << y_[i] << endl;
+  }
+  stream.close();
+}
