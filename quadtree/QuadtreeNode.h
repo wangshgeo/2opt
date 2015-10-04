@@ -44,6 +44,8 @@ public:
 	void DeleteImmediateSegment(Segment* segment);
 	int quadrant() { return quadrant_; }
 	cost_t max_segment_length() { return max_segment_length_; }
+	void set_max_segment_length(cost_t new_length) 
+		{ max_segment_length_ = new_length; }
 private:
 	// Tree location information.
 	QuadtreeNode* parent_;
@@ -71,6 +73,8 @@ private:
 		// nodes.
 	cost_t max_segment_length_; // The maximum segment length of all segments 
 		// under this node (both immediate and child segments).
+	// int highest_order_; // The maximum order index of all segments under 
+		// this node. Used to filter searches. 
 
 	void DetermineTreeLevel();
 	void DetermineChildren(pair<morton_key_type, int>* morton_key_pairs, 
@@ -81,6 +85,7 @@ private:
 	void ComputeDiameter(pair<morton_key_type, int>* morton_key_pairs, 
 		Tour& tour);
 	void ComputeMaxSegmentLength();
+	void UpdateMaxSegmentLength(cost_t old_maximum);
 };
 
 #endif

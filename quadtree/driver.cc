@@ -22,7 +22,7 @@
 
 using namespace std;
 
-#define ITERATIONS 200 // Maximum number of 2-opt iterations.
+#define ITERATIONS 10000 // Maximum number of 2-opt iterations.
 
 int main(int argc, char ** argv)
 {
@@ -41,7 +41,7 @@ int main(int argc, char ** argv)
 
   Quadtree quadtree(tour);
 
-  // tour.OutputFile("usa13509_morton.tsp");
+  // tour.OutputFile("d18512_morton.tsp");
 
   // quadtree.Print(2);
 

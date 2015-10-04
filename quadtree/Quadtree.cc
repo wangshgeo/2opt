@@ -121,6 +121,11 @@ void Quadtree::InsertSegment(Segment* segment)
   }
   current->AddImmediateSegment(segment);
   segment->node = current;
+  //Update max_segment_size_
+  if(segment->length > current->max_segment_length())
+  {
+    current->set_max_segment_length(segment->length);
+  }
 }
 
 void Quadtree::InsertTourSegments(Tour& tour)
