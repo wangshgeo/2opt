@@ -27,13 +27,18 @@ This repository includes several implementation variants:
   the Barnes-Hut algorithm for n-body problems, but tailored to segments. 
   Update: Success! This implementation is an order of magnitude faster than 
   the distance_table implementation (the algorithmic state of the art), and 
-  even on the CPU is competitive with Martin Burtscher's GPU implementation!  
+  even on the CPU is competitive with Martin Burtscher's optimally-conditioned 
+  GPU implementation!  
 
-Quadtree Performance:  
-1. usa13509_morton.tsp: ~25x faster than distance_table on my machine.  
-2. d18512_morton.tsp: ~108x faster than distance_table on my machine. 
+Quadtree performance on my machine:  
+1. usa13509_morton.tsp: ~25x (parallel) faster than distance_table (serial).  
+2. d18512_morton.tsp: ~108x (parallel) faster than distance_table (serial). 
+3. pla33810_morton.tsp: ~544x (parallel) faster than naive (serial). Naive was 
+  used because distance_table became unresponsive due to memory limits.  
+4. pla85900_morton.tsp: ~1448x (parallel) faster than naive (serial). Naive was 
+  used because distance_table became unresponsive due to memory limits.
 
-So we see that the quadtree implementation has truly sub-quadratic complexity.
+The quadtree implementation's sub-quadratic complexity is clearly evident.  
 
 Quadtree Improvements:  
 1. Tree updates of filter quantities.
