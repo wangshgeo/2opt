@@ -1,5 +1,5 @@
 CC = c++
-CC_FLAGS = -O3 -g -Wall
+CC_FLAGS = -O3 -g -Wall -ffast-math
 
 CC_SRCS = driver.cc Instance.cc timer.cc checks.cc \
 	best_improvement.cc swap.cc

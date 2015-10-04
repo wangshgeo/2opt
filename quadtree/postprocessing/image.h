@@ -8,7 +8,7 @@
 using namespace cimg_library;
 
 #define IMAGE_SIZE 800
-#define BODY_RADIUS 2
+#define BODY_RADIUS 0
 
 
 

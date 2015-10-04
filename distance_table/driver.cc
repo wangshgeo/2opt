@@ -9,7 +9,7 @@
 #include "best_improvement.hh"
 #include "swap.hh"
 
-#define ITERATIONS 20
+#define ITERATIONS 200
 #define REFRESH 1
 
 int main(int argc, char ** argv)

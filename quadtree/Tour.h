@@ -53,6 +53,7 @@ private:
   void renew_segment(Segment& segment, 
     int new_start_city, int new_end_city);
   cost_t Cost(int city1, int city2);
+  cost_t TourCost();
 };
 
 

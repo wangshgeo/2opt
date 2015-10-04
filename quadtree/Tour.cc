@@ -173,16 +173,35 @@ void Tour::Check()
   delete[] visited;
 }
 
+cost_t Tour::TourCost()
+{
+  cost_t total_cost = 0;
+  for(int i = 0; i < cities_; ++i)
+  {
+    total_cost += segments_[i].length;
+  }
+  return total_cost;
+}
+
 void Tour::OutputFile(string file_name)
 {
   ofstream stream;
   stream.open(file_name.c_str());
-  stream << "DIMENSION: " << cities_ << endl;
-  stream << "NODE_COORD_SECTION" << endl;
   stream << std::fixed << std::setprecision(5);
+  stream << "DIMENSION : " << cities_ << endl;
+  stream << "TOUR_COST : " << TourCost() << endl;
+  stream << "NODE_COORD_SECTION" << endl;
   for(int i = 0; i < cities_; ++i)
   {
-    stream << i+1 << " " << x_[i] << " " << y_[i] << endl;
+    for(int j = 0; j < cities_; ++j)
+    {
+      if(segments_[j].order == i)
+      {
+        int city = segments_[j].start_city;
+        stream << i+1 << " " << x_[city] << " " << y_[city] << endl;
+        break;
+      }
+    }
   }
   stream.close();
 }

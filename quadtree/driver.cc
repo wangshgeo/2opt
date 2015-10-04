@@ -22,7 +22,7 @@
 
 using namespace std;
 
-#define ITERATIONS 20 // Maximum number of 2-opt iterations.
+#define ITERATIONS 200 // Maximum number of 2-opt iterations.
 
 int main(int argc, char ** argv)
 {
@@ -63,10 +63,9 @@ int main(int argc, char ** argv)
     // cout << "cost of 4959, 5154 swap: " << tour.SwapCost(*seg1, *seg2) << endl;
     bool swapped = solver.PerformSwap();
 
-
     // tour.SerialCheck();
 
-    tour.Check();
+    //tour.Check();
 
     cout << endl;
     if(not swapped) break;
@@ -75,6 +74,8 @@ int main(int argc, char ** argv)
 
   cout << "Average FindBestSwap time: " 
     << quadtree_best_improvement_time / ITERATIONS << endl;
+
+  tour.OutputFile("iterated_tour.tsp");
 
   cout << "Program finished successfully. Exiting.\n\n";
 
