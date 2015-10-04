@@ -15,6 +15,7 @@ echo "Script began:" `date`
 echo "Node:" `hostname`
 echo "Current directory: ${PWD}"
 
+make clean
 make -j10
 
 ./tsp usa13509_morton.tsp

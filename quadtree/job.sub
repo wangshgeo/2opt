@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#SBATCH -A class
+#SBATCH -N 1
+#SBATCH --exclusive
+#SBATCH --time=00:10:00
+
+#SBATCH -J mbs
+#SBATCH --error=job.%J.err
+#SBATCH --output=job.%J.out
+
+make clean
+make -j10
+
+./tsp usa13509_morton.tsp
+
