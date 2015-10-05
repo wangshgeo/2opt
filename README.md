@@ -26,9 +26,9 @@ This repository includes several implementation variants:
 4. quadtree: an experimental algorithm utilizing a quadtree in a similar way to 
   the Barnes-Hut algorithm for n-body problems, but tailored to segments. 
   Update: Success! This implementation is an order of magnitude faster than 
-  the distance_table implementation (the algorithmic state of the art), and 
-  even on the CPU is competitive with Martin Burtscher's optimally-conditioned 
-  GPU implementation!  
+  the distance_table implementation (the algorithmic state of the art) on 
+  usa13509.tsp, and even on my desktop CPU is competitive with Martin 
+  Burtscher's GPU implementation peak!  
 
 Quadtree performance on my machine:
 
