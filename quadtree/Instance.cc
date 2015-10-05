@@ -27,6 +27,7 @@ void Instance::readCities(string file_name)
       break;
     }
   }
+  cout << "Cities read: " << cities_ << endl;
 }
 
 // This fills x_ and y_. The knowledge of cities_ is assumed.
@@ -60,7 +61,9 @@ void Instance::readCoordinates(string file_name)
       line_stream >> y_[city_id-1];
       ++counter;
     }
-
-    if(city_id == cities_) break; 
+    // cout << "Read city " << city_id << " / " << cities_ << endl;
+    if(city_id >= cities_) break; 
   }
+  cout << "Done reading city file." << endl;
+  file_stream.close();
 }

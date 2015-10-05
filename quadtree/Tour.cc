@@ -183,25 +183,72 @@ cost_t Tour::TourCost()
   return total_cost;
 }
 
+// void Tour::OutputFile(string file_name)
+// {
+//   cout << "Writing out tour to " << file_name << "..." << endl;
+
+//   // // Slow version
+//   // ofstream stream;
+//   // stream.open(file_name.c_str());
+//   // stream << std::fixed << std::setprecision(5);
+//   // stream << "DIMENSION : " << cities_ << endl;
+//   // stream << "TOUR_COST : " << TourCost() << endl;
+//   // stream << "NODE_COORD_SECTION" << endl;
+//   // for(int i = 0; i < cities_; ++i)
+//   // {
+//   //   for(int j = 0; j < cities_; ++j)
+//   //   {
+//   //     if(segments_[j].order == i)
+//   //     {
+//   //       int city = segments_[j].start_city;
+//   //       stream << i+1 << " " << x_[city] << " " << y_[city] << "\n";
+//   //       break;
+//   //     }
+//   //   }
+//   // }
+//   // stream.close();
+
+//   // Faster version
+//   FILE* output_file = fopen(file_name.c_str(), "w");
+//   fprintf(output_file, "DIMENSION : %d\n", cities_);
+//   fprintf(output_file, "TOUR_COST : %ld\n", TourCost());
+//   fprintf(output_file, "NODE_COORD_SECTION\n");
+//   // This is an n^2 way of doing things...
+//   for(int i = 0; i < cities_; ++i)
+//   {
+//     for(int j = 0; j < cities_; ++j)
+//     {
+//       if(segments_[j].order == i)
+//       {
+//         int city = segments_[j].start_city;
+//         fprintf(output_file, "%d %.5f %.5f\n", i+1, x_[city], y_[city]);
+//         break;
+//       }
+//     }
+//   }
+//   fclose(output_file);
+
+//   cout << "Done writing out tour." << endl;
+// }
+
 void Tour::OutputFile(string file_name)
 {
-  ofstream stream;
-  stream.open(file_name.c_str());
-  stream << std::fixed << std::setprecision(5);
-  stream << "DIMENSION : " << cities_ << endl;
-  stream << "TOUR_COST : " << TourCost() << endl;
-  stream << "NODE_COORD_SECTION" << endl;
+  cout << "Writing out tour to " << file_name << "..." << endl;
+
+  std::vector<Segment> segments_buffer( segments_, segments_+cities_ );
+  std::sort( segments_buffer.begin(), segments_buffer.end(), 
+    [](const Segment &a, const Segment &b) {return a.order < b.order;} );
+
+  FILE* output_file = fopen(file_name.c_str(), "w");
+  fprintf(output_file, "DIMENSION : %d\n", cities_);
+  fprintf(output_file, "TOUR_COST : %ld\n", TourCost());
+  fprintf(output_file, "NODE_COORD_SECTION\n");
   for(int i = 0; i < cities_; ++i)
   {
-    for(int j = 0; j < cities_; ++j)
-    {
-      if(segments_[j].order == i)
-      {
-        int city = segments_[j].start_city;
-        stream << i+1 << " " << x_[city] << " " << y_[city] << endl;
-        break;
-      }
-    }
+    int city = segments_buffer[i].start_city;
+    fprintf(output_file, "%d %.5f %.5f\n", i+1, x_[city], y_[city]);
   }
-  stream.close();
+  fclose(output_file);
+
+  cout << "Done writing out tour." << endl;
 }
