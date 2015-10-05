@@ -31,7 +31,7 @@ This repository includes several implementation variants:
   GPU implementation!  
 
 Quadtree performance on my machine:
-  
+
 1. usa13509_morton.tsp: ~25x (parallel) faster than distance_table (serial).  
 2. d18512_morton.tsp: ~108x (parallel) faster than distance_table (serial).  
 3. pla33810_morton.tsp: ~544x (parallel) faster than naive (serial). Naive was 
@@ -49,6 +49,7 @@ Quadtree performance on my machine:
 The quadtree implementation's sub-quadratic complexity is clearly evident.  
 
 Quadtree Improvements:  
+
 1. More filter quantities.
 2. More tree updates of filter quantities.
 
