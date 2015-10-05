@@ -48,9 +48,9 @@ Quadtree performance on my machine:
 
 The quadtree implementation's sub-quadratic complexity is clearly evident.  
 
-Quadtree Improvements:  
+# Potential Improvements 
 
-1. More filter quantities.
+1. More filter quantities (to reduce tree traversal).
 2. More tree updates of filter quantities.
 
 # Running the Programs
