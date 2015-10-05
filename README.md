@@ -30,7 +30,8 @@ This repository includes several implementation variants:
   even on the CPU is competitive with Martin Burtscher's optimally-conditioned 
   GPU implementation!  
 
-Quadtree performance on my machine:  
+Quadtree performance on my machine:
+  
 1. usa13509_morton.tsp: ~25x (parallel) faster than distance_table (serial).  
 2. d18512_morton.tsp: ~108x (parallel) faster than distance_table (serial).  
 3. pla33810_morton.tsp: ~544x (parallel) faster than naive (serial). Naive was 
