@@ -9,12 +9,12 @@
 class World
 {
   public:
+    World() = default;
     World(std::vector<City> cities) : m_cities(std::move(cities))
     {
       computeStarts();
       computeDistances();
     }
-    
     void computeStarts()
     {
       m_starts.resize(m_cities.size());
