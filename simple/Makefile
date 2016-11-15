@@ -1,7 +1,7 @@
 CC = c++
 CC_FLAGS = -O3 -g -Wall -ffast-math -std=c++14
 
-CC_SRCS = main.t.cpp Reader.cpp
+CC_SRCS = main.t.cpp Reader.cpp SimpleSolver.cpp
 
 %.o: %.cpp
 	$(CC) $(CC_FLAGS) -o $@ -c $<

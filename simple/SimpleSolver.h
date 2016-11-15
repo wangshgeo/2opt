@@ -11,8 +11,8 @@ class SimpleSolver
       int i, j;
     };
     void optimize(World& w);
-    Solution identify(const World& w);
-    void improve(World& w);
+    void identify(const World& w);
+    void improve(World& w) const;
   private:
     Solution currentBest;
 };

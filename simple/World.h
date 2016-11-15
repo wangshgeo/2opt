@@ -18,7 +18,7 @@ class World
     void computeStarts()
     {
       m_starts.resize(m_cities.size());
-      for(size_t i = 0; i < m_cities.size(); ++i)
+      for(std::size_t i = 0; i < m_cities.size(); ++i)
       {
         m_starts[i] = serializedStart(i);
       }
@@ -26,9 +26,9 @@ class World
     void computeDistances()
     {
       m_distances.resize(serializedStart(m_cities.size()));
-      for(size_t i = 1; i < m_cities.size(); ++i)
+      for(std::size_t i = 1; i < m_cities.size(); ++i)
       {
-        for(size_t j = 0; j < i; ++j)
+        for(std::size_t j = 0; j < i; ++j)
         {
           const int iserial = serialize(i, j);
           m_distances[iserial] = distance(i, j);
