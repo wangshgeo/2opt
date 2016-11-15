@@ -48,6 +48,11 @@ class World
     {
       return m_starts[i] + j;
     }
+    inline int getCityCount() const { return m_cities.size(); }
+    inline double getDistance(const int i, const int j) const
+    {
+      return m_distances[serialize(i, j)];
+    }
   private:
     std::vector<City> m_cities;
     std::vector<double> m_distances;

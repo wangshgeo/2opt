@@ -7,9 +7,13 @@ class SimpleSolver
   public:
     struct Solution
     {
-      double cost;
+      double change;
       int i, j;
     };
-    Solution iterate(const World& w);
+    void optimize(World& w);
+    Solution identify(const World& w);
+    void improve(World& w);
+  private:
+    Solution currentBest;
 };
 

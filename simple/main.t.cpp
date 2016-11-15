@@ -6,7 +6,7 @@
 int main(int argc, char* argv[])
 {
   Reader r("worlds/burma14.tsp");
-  World w(r.getCities());
+  const World w(r.getCities());
   // Test index serialization.
   {
     Tester t(w);
