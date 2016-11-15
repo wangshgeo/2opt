@@ -14,6 +14,16 @@ using namespace std;
 
 class Instance
 {
+public:
+	dtype* getX() const { return x; }
+	dtype* getY() const { return y; }
+	dtype getDistance(int n1,int n2) const { return table[n1][n2]; }
+	// dtype getAngle(int n1,int n2) const { return angles[n1][n2]; }
+	int getCityCount() const { return nb_cities; }
+	//Constructor
+	Instance(char*coordinateFile,bool precompute_=true) : precompute(precompute_) { instanceFromFile(coordinateFile); }
+	//Destructor
+	~Instance() { deallocateTable();delete[] x;delete[] y; }
 private:
 	//variables.
 	int nb_cities;
@@ -37,16 +47,6 @@ private:
 	void instanceFromFile(char*coordinateFile);
 	//for destructor
 	void deallocateTable();
-public:
-	dtype* getX() const { return x; }
-	dtype* getY() const { return y; }
-	dtype getDistance(int n1,int n2) const { return table[n1][n2]; }
-	// dtype getAngle(int n1,int n2) const { return angles[n1][n2]; }
-	int getCityCount() const { return nb_cities; }
-	//Constructor
-	Instance(char*coordinateFile,bool precompute_=true) : precompute(precompute_) { instanceFromFile(coordinateFile); }
-	//Destructor
-	~Instance() { deallocateTable();delete[] x;delete[] y; }
 };
 
 #endif
