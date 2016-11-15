@@ -5,14 +5,15 @@
 class Tester : private World
 {
   public:
-    Tester(const World& w) : w(w) {}
-    void testSerialize(const int i, const int j, const int expected) const 
+    Tester() = delete;
+    Tester(const World& w) : m_world(w) {}
+    void testSerialize(const int i, const int j, const int expected) const
     {
-      assert(w.serialize(i, j) == expected); 
+      assert(m_world.serialize(i, j) == expected);
     }
     void testDistance();
   private:
-    const World& w;
+    const World& m_world;
 };
 
 

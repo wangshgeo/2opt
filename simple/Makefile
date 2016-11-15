@@ -3,10 +3,10 @@ CC_FLAGS = -O3 -g -Wall -ffast-math -std=c++14
 
 CC_SRCS = main.t.cpp Reader.cpp
 
-%.o: %.cc
+%.o: %.cpp
 	$(CC) $(CC_FLAGS) -o $@ -c $<
 
-MY_OBJS = $(CC_SRCS:.cc=.o)
+MY_OBJS = $(CC_SRCS:.cpp=.o)
 
 tsp: $(MY_OBJS)
 	$(CC) $(CC_FLAGS) $^ -o tsp
