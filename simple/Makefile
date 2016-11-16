@@ -1,5 +1,5 @@
 CC = c++
-CC_FLAGS = -O3 -g -Wall -ffast-math -std=c++14
+CC_FLAGS = -O3 -g -Wall -ffast-math -std=c++11
 
 CC_SRCS = main.t.cpp Reader.cpp SimpleSolver.cpp
 

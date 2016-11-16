@@ -2,11 +2,12 @@
 #include <iostream>
 #include "Tester.h"
 #include "Reader.h"
+#include "SimpleSolver.h"
 
 int main(int argc, char* argv[])
 {
   Reader r("worlds/burma14.tsp");
-  const World w(r.getCities());
+  World w(r.getCities());
   // Test index serialization.
   {
     Tester t(w);
@@ -34,7 +35,8 @@ int main(int argc, char* argv[])
 
   // Test finding best route for a small problem.
   {
-
+     SimpleSolver s;
+     s.optimize(w);
   }
 
   std::cout << "Passed all tests." << std::endl;

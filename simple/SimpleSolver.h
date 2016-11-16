@@ -8,7 +8,7 @@ class SimpleSolver
     struct Solution
     {
       double change;
-      int i, j;
+      int si, sj;
     };
     void optimize(World& w);
     void identify(const World& w);
