@@ -1,38 +1,20 @@
-#ifndef __DRAWING_H__
-#define __DRAWING_H__
+#pragma once
+
+#include <stdlib.h>
+#include <math.h>
 
 #include <iostream>
 #include <sstream>
 #include <fstream>
 #include <string>
 #include <vector>
-#include <stdlib.h>
-#include <math.h>
-#include "types.h"
+
 #include "CImg.h"
-#include "../instance.h"
+
 using namespace cimg_library;
 
 class Drawer
 {
-private:
-	//CImg<unsigned char> vv;
-	int nodes;
-	coordType*x;
-	coordType*y;
-	coordType xmin,ymax,yrange,xdomain;
-	//calculations
-	coordType getMaxX();
-	coordType getMinX();
-	coordType getMaxY();
-	coordType getMinY();
-	int xtoc(coordType x);
-	int ytor(coordType y);
-	//for constructors
-	vector<string> spaceTokens(string line) const;
-	void coordinatesFromFile(char*coordinateFile);
-	int readCityCount(char*filepath) const;
-	void readCityCoordinates(char*filepath,coordType*x,coordType*y) const;
 public:
 	//drawing functions
 	void drawCities();
@@ -45,17 +27,20 @@ public:
 	void saveTour(int*tour,int num);
 	void saveSeq(int tour[],int seq[],int seqi,int num,int num2);
 	//constructors
-	Drawer(char*cf) { //vv = makeVisualizer(); 
-		coordinatesFromFile(cf); 
+	Drawer(char*cf)
+  {
+    //vv = makeVisualizer();
+		coordinatesFromFile(cf);
 	}
-	//Drawer(Instance inst): instance(inst) { makeVisualizer(); }
-	~Drawer() { delete[] x;delete[] y; }
+private:
+	//CImg<unsigned char> vv;
+	coordType xmin,ymax,yrange,xdomain;
+	//calculations
+	coordType getMaxX();
+	coordType getMinX();
+	coordType getMaxY();
+	coordType getMinY();
+	int xtoc(coordType x);
+	int ytor(coordType y);
 };
 
-
-
-
-//Internal stuff
-
-
-#endif
