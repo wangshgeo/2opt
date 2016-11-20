@@ -18,10 +18,10 @@ class DistanceTable
             GEO = 'G'
         };
         DistanceTable(const std::vector<City>& cities,
-            const DistanceFunction f = DistanceFunction::GEO);
-        inline double getDistance(const int i, const int j) const;
+            const DistanceFunction f);
+        inline int getDistance(const int i, const int j) const;
     private:
-        std::vector<double> m_distances;
+        std::vector<int> m_distances;
         const IndexHash m_hash;
 
         inline int round(const double x) const;
@@ -33,7 +33,7 @@ class DistanceTable
 };
 
 
-double DistanceTable::getDistance(const int i, const int j) const
+int DistanceTable::getDistance(const int i, const int j) const
 {
   return m_distances[m_hash.hash(i, j)];
 }

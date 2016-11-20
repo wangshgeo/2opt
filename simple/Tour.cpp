@@ -40,9 +40,9 @@ bool Tour::valid() const
 }
 
 
-double Tour::length(const DistanceTable& d) const
+int Tour::length(const DistanceTable& d) const
 {
-    double total = 0;
+    int total = 0;
     for(size_t i = 0; i < m_tour.size() - 1; ++i)
     {
         total += d.getDistance(m_tour[i], m_tour[i + 1]);
