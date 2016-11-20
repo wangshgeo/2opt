@@ -67,5 +67,3 @@ void Tour::shuffle()
 
 
 
-
-
