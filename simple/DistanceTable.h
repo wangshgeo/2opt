@@ -12,13 +12,21 @@
 class DistanceTable
 {
     public:
-        DistanceTable(const std::vector<City>& cities);
+        enum class DistanceFunction : char
+        {
+            EUC = 'E',
+            GEO = 'G'
+        };
+        DistanceTable(const std::vector<City>& cities, const DistanceFunction f = DistanceFunction::GEO);
         inline double getDistance(const int i, const int j) const;
     private:
         std::vector<double> m_distances;
         const IndexHash m_hash;
 
-        inline double distance(const std::vector<City>& cities,
+        inline int round(const double x) const;
+        inline int distance(const std::vector<City>& cities,
+            const int i, const int j) const;
+        inline int geoDistance(const std::vector<City>& cities,
             const int i, const int j) const;
 };
 

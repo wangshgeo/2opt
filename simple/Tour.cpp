@@ -18,7 +18,7 @@ bool Tour::valid() const
     std::vector<bool> visited(m_tour.size(), false);
     for(auto city : m_tour)
     {
-        bool validIndex = city >= 0 and city < m_tour.size();
+        bool validIndex = city >= 0 and city < static_cast<int>(m_tour.size());
         if(not validIndex)
         {
             return false;
@@ -40,3 +40,13 @@ bool Tour::valid() const
 }
 
 
+double Tour::length(const DistanceTable& d) const
+{
+    double total = 0;
+    for(size_t i = 0; i < m_tour.size() - 1; ++i)
+    {
+        total += d.getDistance(m_tour[i], m_tour[i + 1]);
+    }
+    total += d.getDistance(m_tour.back(), m_tour.front());
+    return total;
+}

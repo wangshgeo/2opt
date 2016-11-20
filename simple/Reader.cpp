@@ -1,5 +1,12 @@
 #include "Reader.h"
 
+
+Reader::Reader(std::string filename) : m_filename(std::move(filename))
+{
+    readCities();
+}
+
+
 int Reader::getCityCount() const
 {
   std::ifstream myfile(m_filename.c_str());
@@ -19,12 +26,14 @@ int Reader::getCityCount() const
       }
     }
   }
-  else std::cout << "Unable to read city count." << std::endl;
+  else std::cerr << "Unable to read city count." << std::endl;
   return 0;
 }
 
-std::vector<City> Reader::getCities() const
+
+void Reader::readCities()
 {
+  m_cities.clear();
   std::ifstream myfile(m_filename.c_str());
   if(myfile.is_open())
   {
@@ -33,7 +42,6 @@ std::vector<City> Reader::getCities() const
     {
       if(line == "NODE_COORD_SECTION") break;
     }
-    std::vector<City> cities;
     while(getline(myfile,line))
     {
       std::vector<std::string> tokens = spaceTokens(line);
@@ -41,13 +49,17 @@ std::vector<City> Reader::getCities() const
       {
         const double x = atof(tokens[1].c_str());
         const double y = atof(tokens[2].c_str());
-        cities.push_back(City{x, y});
+        m_cities.push_back(City{x, y});
       }
     }
-    return cities;
   }
-  else std::cout << "Unable to read city coordinates." << std::endl;
-  return std::vector<City>();
+  else std::cerr << "Unable to read city coordinates." << std::endl;
+}
+
+
+const std::vector<City>& Reader::getCities() const
+{
+  return m_cities;
 }
 
 std::vector<std::string> Reader::spaceTokens(std::string line) const

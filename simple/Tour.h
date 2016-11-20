@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <vector>
 
+#include "DistanceTable.h"
 
 class Tour
 {
@@ -13,9 +14,10 @@ class Tour
         Tour(std::vector<int> initial);
         inline int getCityCount() const;
         inline int getCityId(const int sequenceNumber) const;
-        inline int getNextCityId(int sequenceNumber) const;
+        inline int getNextCityId(size_t sequenceNumber) const;
         inline void exchange(const int i, const int j);
         bool valid() const;
+        double length(const DistanceTable& d) const;
     private:
         std::vector<int> m_tour;
 };
@@ -42,11 +44,11 @@ int Tour::getCityId(const int sequenceNumber) const
 }
 
 
-int Tour::getNextCityId(int sequenceNumber) const
+int Tour::getNextCityId(size_t sequenceNumber) const
 {
-    sequenceNumber = (sequenceNumber == m_tour.size() - 1)
-        ? -1 : sequenceNumber;
-    return m_tour[sequenceNumber + 1];
+    sequenceNumber = (sequenceNumber + 1 == m_tour.size())
+        ? 0 : sequenceNumber + 1;
+    return m_tour[sequenceNumber];
 }
 
 

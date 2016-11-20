@@ -15,6 +15,6 @@ class SimpleSolver
     void optimize(const DistanceTable& d, Tour& t);
     void identify(const DistanceTable& d, const Tour& t);
   private:
-    Solution currentBest;
+    Solution m_currentBest;
 };
 
