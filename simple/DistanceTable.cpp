@@ -38,13 +38,14 @@ int DistanceTable::distance(const std::vector<City>& cities,
 }
 
 
-double toRadians(const double coordinate)
+double DistanceTable::toRadians(const double coordinate) const
 {
     const int deg = static_cast<int>(coordinate);
     const double min = coordinate - deg;
     constexpr double Pi = 3.141592;
     return Pi * (deg + 5.0 * min / 3.0) / 180.0;
 }
+
 
 int DistanceTable::geoDistance(const std::vector<City>& cities,
     const int i, const int j) const

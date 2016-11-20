@@ -27,7 +27,6 @@ class DistanceTable
         inline int round(const double x) const;
         inline int distance(const std::vector<City>& cities,
             const int i, const int j) const;
-        inline double toRadians(const double coordinate) const;
         inline int geoDistance(const std::vector<City>& cities,
             const int i, const int j) const;
 };
