@@ -13,10 +13,9 @@
 
 using namespace cimg_library;
 
-class Drawer
+class Plotter
 {
 public:
-	//drawing functions
 	void drawCities();
 	void drawTour(int*tour);
 	void drawTour2(int*tour,int*path,int np);
@@ -26,13 +25,13 @@ public:
 	//saving functions
 	void saveTour(int*tour,int num);
 	void saveSeq(int tour[],int seq[],int seqi,int num,int num2);
-	//constructors
-	Drawer(char*cf)
-  {
-    //vv = makeVisualizer();
-		coordinatesFromFile(cf);
-	}
 private:
+    static constexpr int CityRadius = 2;
+    static constexpr int Rows = 400;
+    static constexpr int Columns = 400;
+    static constexpr int Padding = 20;
+    static constexpr int ColumnDomain = Columns - 2 * Padding;
+    static constexpr int RowRange = Rows - 2 * Padding;
 	//CImg<unsigned char> vv;
 	coordType xmin,ymax,yrange,xdomain;
 	//calculations

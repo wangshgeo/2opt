@@ -1,6 +1,8 @@
 #pragma once
 
-#include "World.h"
+#include "DistanceTable.h"
+#include "Tour.h"
+
 
 class SimpleSolver
 {
@@ -10,9 +12,8 @@ class SimpleSolver
       double change;
       int si, sj;
     };
-    void optimize(World& w);
-    void identify(const World& w);
-    void improve(World& w) const;
+    void optimize(const DistanceTable& d, Tour& t);
+    void identify(const DistanceTable& d, const Tour& t);
   private:
     Solution currentBest;
 };

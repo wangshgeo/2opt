@@ -1,9 +1,8 @@
-#include "include/types.h"
-#include "include/input.h"
-#include "include/draw.h"
-#include "include/distance.h"
+// #include "include/input.h"
+// #include "include/draw.h"
+// #include "include/distance.h"
 
-int main(int argc,char* argv[])
+int main(int argc, char* argv[])
 {
 	CImg<unsigned char> visu=makeVisualizer();
 	drawCities(x,y,nb_cities,&visu);

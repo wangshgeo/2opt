@@ -1,24 +1,14 @@
-#include "include/types.h"
-#include "include/draw.h"
-#include <iostream>
-using namespace std;
+#include "Plotter.h"
 
 //View sizing parameters
-#define CITYRADIUS 2
-#define ROWS 400
-#define COLUMNS 400
-#define PADDING 20
-#define COLUMNDOMAIN ((COLUMNS)-2*(PADDING))
-#define ROWRANGE ((ROWS)-2*(PADDING))
-
-int Drawer::xtoc(coordType x)
+int Plotter::toColumn(const double x)
 {
 	coordType scale = 1.0;
 	if(xdomain < yrange)
 		scale = xdomain/yrange;
 	return (int)(COLUMNDOMAIN*(scale*(x-xmin)/xdomain))+PADDING;
 }
-int Drawer::ytor(coordType y)
+int Plotter::toRow(const double y)
 {
 	coordType scale = 1.0;
 	if(yrange < xdomain)
