@@ -1,10 +1,15 @@
 #include "SimpleSolver.h"
 
-#include <iostream>
 
-void SimpleSolver::identify(const DistanceTable& d, const Tour& t)
+SimpleSolver::SimpleSolver(const Tour& t) : m_bestTour(t.getTour())
 {
-    m_currentBest = {0, 0, 0};
+
+}
+
+
+SimpleSolver::Solution SimpleSolver::identify(const DistanceTable& d, const Tour& t) const
+{
+    Solution bestChange = {0, 0, 0};
     for(int si = 0; si < t.getCityCount() - 2; ++si)
     {
         for(int sj = si + 2; sj < t.getCityCount(); ++sj)
@@ -13,32 +18,49 @@ void SimpleSolver::identify(const DistanceTable& d, const Tour& t)
             const int j = t.getCityId(sj);
             const int inext = t.getNextCityId(si);
             const int jnext = t.getNextCityId(sj);
-            //std::cout << "i, j: " << i << ", " << j << std::endl;
-            //std::cout << "inext, jnext: " << inext << ", " << jnext << std::endl;
             const double currentCost = d.getDistance(i, inext) + d.getDistance(j, jnext);
             const double newCost = d.getDistance(i, j) + d.getDistance(inext, jnext);
             const double change = newCost - currentCost;
-            if(change < m_currentBest.change)
+            if(change < bestChange.change)
             {
-                m_currentBest = {change, si, sj};
+                bestChange = {change, si, sj};
             }
         }
     }
+    return bestChange;
 }
 
 
 void SimpleSolver::optimize(const DistanceTable& d, Tour& t)
 {
-    //std::cout << t.length(d) << std::endl;
-    identify(d, t);
-    while(m_currentBest.change < 0)
+    m_bestTour = t;
+    for(int i = 0; i < m_restarts; ++i)
     {
-        //std::cout << m_currentBest.change << ", "
-        //    << m_currentBest.si << ", " << m_currentBest.sj << std::endl;
-        //std::cout << t.length(d) << std::endl;
-        //std::cin.ignore();
-        t.exchange(m_currentBest.si, m_currentBest.sj);
-        identify(d, t);
+        Solution trial = identify(d, t);
+        while(trial.change < 0)
+        {
+            t.exchange(trial.si, trial.sj);
+            trial = identify(d, t);
+        }
+        if(t.length(d) < m_bestTour.length(d))
+        {
+            m_bestTour = t;
+        }
+        else
+        {
+            t = m_bestTour;
+        }
+        perturb(t);
     }
+    t = m_bestTour;
 }
+
+
+void SimpleSolver::perturb(Tour& t)
+{
+    const int i = std::rand() % t.getCityCount();
+    const int j = std::rand() % t.getCityCount();
+    t.exchange(i, j);
+}
+
 

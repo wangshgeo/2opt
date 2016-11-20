@@ -18,6 +18,7 @@ class Tour
         inline void exchange(const int i, const int j);
         bool valid() const;
         double length(const DistanceTable& d) const;
+        inline const std::vector<int>& getTour() const;
     private:
         std::vector<int> m_tour;
 };
@@ -50,6 +51,13 @@ int Tour::getNextCityId(size_t sequenceNumber) const
         ? 0 : sequenceNumber + 1;
     return m_tour[sequenceNumber];
 }
+
+
+const std::vector<int>& Tour::getTour() const
+{
+    return m_tour;
+}
+
 
 
 
