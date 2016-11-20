@@ -9,6 +9,7 @@
 class Tour
 {
     public:
+        Tour(const int cityCount);
         Tour(std::vector<int> initial);
         inline int getCityCount() const;
         inline int getCityId(const int sequenceNumber) const;

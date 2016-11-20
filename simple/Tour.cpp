@@ -1,6 +1,15 @@
 #include "Tour.h"
 
 
+Tour::Tour(const int cityCount) : m_tour(cityCount, 0)
+{
+    for(int i = 0; i < cityCount; ++i)
+    {
+        m_tour[i] = i;
+    }
+}
+
+
 Tour::Tour(std::vector<int> initial) : m_tour(std::move(initial)) {}
 
 
