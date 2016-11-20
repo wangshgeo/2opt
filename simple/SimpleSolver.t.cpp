@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
     Reader r("worlds/burma14.tsp");
     DistanceTable d(r.getCities(), DistanceTable::DistanceFunction::GEO);
     Tour t(r.getCities().size());
-    SimpleSolver s(t);
+    SimpleSolver s;
     s.optimize(d, t);
     std::cout << t.length(d) << std::endl;
 
