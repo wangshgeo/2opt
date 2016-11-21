@@ -24,10 +24,10 @@ class DistanceTable
         std::vector<int> m_distances;
         const IndexHash m_hash;
 
-        inline int round(const double x) const;
+        inline int nearestInt(const double x) const;
         inline int distance(const std::vector<City>& cities,
             const int i, const int j) const;
-        inline double toRadians(const double coordinate) const;
+        inline double toGeographic(const double coordinate) const;
         inline int geoDistance(const std::vector<City>& cities,
             const int i, const int j) const;
 };

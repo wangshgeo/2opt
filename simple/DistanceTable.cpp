@@ -23,7 +23,7 @@ DistanceTable::DistanceTable(const std::vector<City>& cities, const DistanceFunc
 }
 
 
-int DistanceTable::round(const double x) const
+int DistanceTable::nearestInt(const double x) const
 {
     return static_cast<int>(x + 0.5);
 }
@@ -32,18 +32,18 @@ int DistanceTable::round(const double x) const
 int DistanceTable::distance(const std::vector<City>& cities,
     const int i, const int j) const
 {
-  const double dx = round(cities[i].x - cities[j].x);
-  const double dy = round(cities[i].y - cities[j].y);
-  return round(std::sqrt(dx * dx + dy * dy));
+  const double dx = nearestInt(cities[i].x - cities[j].x);
+  const double dy = nearestInt(cities[i].y - cities[j].y);
+  return nearestInt(std::sqrt(dx * dx + dy * dy));
 }
 
 
-double DistanceTable::toRadians(const double coordinate) const
+double DistanceTable::toGeographic(const double d) const
 {
-    const int deg = static_cast<int>(coordinate);
-    const double min = coordinate - deg;
+    const int whole = static_cast<int>(d);
+    const double fraction = d - whole;
     constexpr double Pi = 3.141592;
-    return Pi * (deg + 5.0 * min / 3.0) / 180.0;
+    return Pi * (whole + 5.0 * fraction / 3.0) / 180.0;
 }
 
 
@@ -51,11 +51,14 @@ int DistanceTable::geoDistance(const std::vector<City>& cities,
     const int i, const int j) const
 {
     constexpr double RRR = 6378.388;
-    const double q1 = std::cos(toRadians(cities[i].y - cities[j].y));
-    const double q2 = std::cos(toRadians(cities[i].x - cities[j].x));
-    const double q3 = std::cos(toRadians(cities[i].x + cities[j].x));
+    const double q1 = std::cos(
+        toGeographic(cities[i].y) - toGeographic(cities[j].y));
+    const double q2 = std::cos(
+        toGeographic(cities[i].x) - toGeographic(cities[j].x));
+    const double q3 = std::cos(
+        toGeographic(cities[i].x) + toGeographic(cities[j].x));
     const double term = (1.0 + q1) * q2 - (1.0 - q1) * q3;
-    return RRR * std::acos(0.5 * term) + 1.0;
+    return static_cast<int>(RRR * std::acos(0.5 * term) + 1.0);
 }
 
 
