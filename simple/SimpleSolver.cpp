@@ -1,7 +1,6 @@
 #include "SimpleSolver.h"
 
 
-
 SimpleSolver::Solution SimpleSolver::identify(const DistanceTable& d, const Tour& t) const
 {
     Solution bestChange = {0, 0, 0};
@@ -47,14 +46,6 @@ void SimpleSolver::optimize(const DistanceTable& d, Tour& t)
         t.shuffle();
     }
     t = best;
-}
-
-
-void SimpleSolver::perturb(Tour& t)
-{
-    const int i = std::rand() % t.getCityCount();
-    const int j = std::rand() % t.getCityCount();
-    t.exchange(i, j);
 }
 
 

@@ -20,6 +20,7 @@ class Tour
         int length(const DistanceTable& d) const;
         inline const std::vector<int>& getTour() const;
         inline void shuffle();
+        inline void perturb();
     private:
         std::vector<int> m_tour;
 };
@@ -65,5 +66,12 @@ void Tour::shuffle()
     std::random_shuffle(m_tour.begin(), m_tour.end());
 }
 
+
+void Tour::perturb()
+{
+    const int i = std::rand() % m_tour.size();
+    const int j = std::rand() % m_tour.size();
+    exchange(i, j);
+}
 
 

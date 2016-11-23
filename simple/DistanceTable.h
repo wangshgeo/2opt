@@ -7,18 +7,14 @@
 #include <vector>
 
 #include "City.h"
+#include "CostFunction.h"
 #include "IndexHash.h"
 
 class DistanceTable
 {
     public:
-        enum class DistanceFunction : char
-        {
-            EUC = 'E',
-            GEO = 'G'
-        };
         DistanceTable(const std::vector<City>& cities,
-            const DistanceFunction f);
+            const CostFunction f);
         inline int getDistance(const int i, const int j) const;
     private:
         std::vector<int> m_distances;

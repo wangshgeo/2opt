@@ -1,7 +1,7 @@
 #include "DistanceTable.h"
 
 
-DistanceTable::DistanceTable(const std::vector<City>& cities, const DistanceFunction f)
+DistanceTable::DistanceTable(const std::vector<City>& cities, const CostFunction f)
     : m_hash(cities.size())
 {
     for(std::size_t i = 1; i < cities.size(); ++i)
@@ -10,10 +10,10 @@ DistanceTable::DistanceTable(const std::vector<City>& cities, const DistanceFunc
         {
             switch(f)
             {
-                case DistanceFunction::EUC:
+                case CostFunction::EUC:
                     m_distances.push_back(distance(cities, i, j));
                     break;
-                case DistanceFunction::GEO:
+                case CostFunction::GEO:
                     m_distances.push_back(geoDistance(cities, i, j));
                     break;
                 default: break;
@@ -32,9 +32,9 @@ int DistanceTable::nearestInt(const double x) const
 int DistanceTable::distance(const std::vector<City>& cities,
     const int i, const int j) const
 {
-  const double dx = nearestInt(cities[i].x - cities[j].x);
-  const double dy = nearestInt(cities[i].y - cities[j].y);
-  return nearestInt(std::sqrt(dx * dx + dy * dy));
+    const double dx = nearestInt(cities[i].x - cities[j].x);
+    const double dy = nearestInt(cities[i].y - cities[j].y);
+    return nearestInt(std::sqrt(dx * dx + dy * dy));
 }
 
 
@@ -51,12 +51,13 @@ int DistanceTable::geoDistance(const std::vector<City>& cities,
     const int i, const int j) const
 {
     constexpr double RRR = 6378.388;
-    const double q1 = std::cos(
-        toGeographic(cities[i].y) - toGeographic(cities[j].y));
-    const double q2 = std::cos(
-        toGeographic(cities[i].x) - toGeographic(cities[j].x));
-    const double q3 = std::cos(
-        toGeographic(cities[i].x) + toGeographic(cities[j].x));
+    const double longitude[2]
+        = {toGeographic(cities[i].y), toGeographic(cities[j].y)};
+    const double q1 = std::cos(longitude[0] - longitude[1]);
+    const double latitude[2]
+        = {toGeographic(cities[i].x), toGeographic(cities[j].x)};
+    const double q2 = std::cos(latitude[0] - latitude[1]);
+    const double q3 = std::cos(latitude[0] + latitude[1]);
     const double term = (1.0 + q1) * q2 - (1.0 - q1) * q3;
     return static_cast<int>(RRR * std::acos(0.5 * term) + 1.0);
 }

@@ -50,3 +50,6 @@ int Tour::length(const DistanceTable& d) const
     total += d.getDistance(m_tour.back(), m_tour.front());
     return total;
 }
+
+
+

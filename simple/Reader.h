@@ -7,18 +7,21 @@
 #include <vector>
 
 #include "City.h"
+#include "CostFunction.h"
+
 
 class Reader
 {
-  public:
+public:
     Reader(std::string filename);
     const std::vector<City>& getCities() const;
-    int getCityCount() const;
-  private:
+    CostFunction getCostFunction() const;
+private:
     std::string m_filename;
     std::vector<City> m_cities;
 
     void readCities();
     std::vector<std::string> spaceTokens(std::string line) const;
+    int getCityCount() const;
 };
 

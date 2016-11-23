@@ -14,3 +14,6 @@ int IndexHash::start(const int i) const
 {
   return ((i * i) >> 1) - (i >> 1);
 }
+
+
+

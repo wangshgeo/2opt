@@ -18,10 +18,9 @@ public:
     };
     void optimize(const DistanceTable& d, Tour& t);
 private:
-    const int m_restarts = 1;
+    const int m_restarts = 10;
 
     Solution identify(const DistanceTable& d, const Tour& t) const;
-    void perturb(Tour& t);
 };
 
 
