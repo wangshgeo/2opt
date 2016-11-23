@@ -16,7 +16,8 @@ DistanceTable::DistanceTable(const std::vector<City>& cities, const CostFunction
                 case CostFunction::GEO:
                     m_distances.push_back(geoDistance(cities, i, j));
                     break;
-                default: break;
+                default:
+                    break;
             }
         }
     }
@@ -32,8 +33,8 @@ int DistanceTable::nearestInt(const double x) const
 int DistanceTable::distance(const std::vector<City>& cities,
     const int i, const int j) const
 {
-    const double dx = nearestInt(cities[i].x - cities[j].x);
-    const double dy = nearestInt(cities[i].y - cities[j].y);
+    const double dx = cities[i].x - cities[j].x;
+    const double dy = cities[i].y - cities[j].y;
     return nearestInt(std::sqrt(dx * dx + dy * dy));
 }
 

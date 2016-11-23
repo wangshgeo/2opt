@@ -11,6 +11,7 @@
 class SimpleSolver
 {
 public:
+    SimpleSolver(const int restarts) : m_restarts(restarts) {}
     struct Solution
     {
       int change;

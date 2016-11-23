@@ -72,11 +72,11 @@ CostFunction Reader::getCostFunction() const
             const std::string Tag("EDGE_WEIGHT_TYPE");
             if(line.find(Tag) != std::string::npos)
             {
-                if(line.find("GEO", Tag.size()))
+                if(line.find("GEO", Tag.size()) != std::string::npos)
                 {
                     return CostFunction::GEO;
                 }
-                if(line.find("EUC", Tag.size()))
+                if(line.find("EUC", Tag.size()) != std::string::npos)
                 {
                     return CostFunction::EUC;
                 }
