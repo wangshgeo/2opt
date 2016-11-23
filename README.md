@@ -1,5 +1,4 @@
-This repository contains C++ implementations of the 2-Opt heuristic for the
-Euclidean (Geometric), symmetric traveling salesman problem (TSP).
+This repository contains C++ implementations of the 2-Opt heuristic for the symmetric traveling salesman problem (TSP).
 
 # Introduction
 
@@ -52,6 +51,7 @@ The quadtree implementation's sub-quadratic complexity is clearly evident.
 
 1. More filter quantities (to reduce tree traversal).
 2. More tree updates of filter quantities.
+3. k-opt
 
 # Running the Programs
 
