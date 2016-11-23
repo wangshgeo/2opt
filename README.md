@@ -17,8 +17,8 @@ solutions.
 
 This repository includes several implementation variants:
 
-1. naive: recompute all distances every iteration.
-2. distance_table: store all possible distances in a table, and use this when
+1. oldstyle/naive: recompute all distances every iteration.
+2. oldstyle/distance_table: store all possible distances in a table, and use this when
   performing the 2-Opt checks. On my machine on usa13509.tsp, this runs about
   4x faster than the naive version.
 3. gpu: a CUDA GPU version.
