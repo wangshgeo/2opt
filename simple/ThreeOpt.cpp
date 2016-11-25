@@ -59,6 +59,7 @@ void ThreeOpt::optimize(const DistanceTable& d, Tour& t)
         while(s.change < 0)
         {
             t.exchange(s.s[0], s.s[1]);
+            t.exchange(s.s[1], s.s[2]);
             s = identify(d, t);
         }
         if(t.length(d) < best.length(d))
