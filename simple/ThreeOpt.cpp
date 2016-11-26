@@ -50,6 +50,33 @@ ThreeOpt::Solution ThreeOpt::identify(const DistanceTable& d, const Tour& t) con
 }
 
 
+void ThreeOpt::exchange(const Solution s, Tour& t)
+{
+    switch(s.e)
+    {
+        case Solution::ExchangeType::I:
+            t.exchange(s.s[0], s.s[1]);
+            t.exchange(s.s[1], s.s[2]);
+        break;
+        case Solution::ExchangeType::J:
+            t.exchange(s.s[1], s.s[2]);
+            t.exchange(s.s[2], s.s[0]);
+        break;
+        case Solution::ExchangeType::K:
+            t.exchange(s.s[0], s.s[1]);
+            t.exchange(s.s[1], s.s[2]);
+            t.exchange(s.s[0], s.s[2]);
+        break;
+        case Solution::ExchangeType::TRIPLE:
+            t.exchange(s.s[2], s.s[0]);
+            t.exchange(s.s[1], s.s[2]);
+        break;
+        default:
+        break;
+    }
+}
+
+
 void ThreeOpt::optimize(const DistanceTable& d, Tour& t)
 {
     Tour best = t;
