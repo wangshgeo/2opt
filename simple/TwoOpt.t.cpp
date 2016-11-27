@@ -3,7 +3,7 @@
 
 #include "DistanceTable.h"
 #include "Reader.h"
-#include "SimpleSolver.h"
+#include "TwoOpt.h"
 #include "Tour.h"
 
 
@@ -12,7 +12,7 @@ inline int optimize(const char* filename)
     Reader r(filename);
     const DistanceTable d(r.getCities(), r.getCostFunction());
     Tour t(r.getCities().size());
-    SimpleSolver s(t.getCityCount());
+    TwoOpt s(t.getCityCount());
     s.optimize(d, t);
     std::cout << t.length(d) << std::endl;
     return t.length(d);

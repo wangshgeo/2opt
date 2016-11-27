@@ -1,7 +1,7 @@
-#include "SimpleSolver.h"
+#include "TwoOpt.h"
 
 
-SimpleSolver::Solution SimpleSolver::identify(const DistanceTable& d, const Tour& t) const
+TwoOpt::Solution TwoOpt::identify(const DistanceTable& d, const Tour& t) const
 {
     Solution bestChange = {0, 0, 0};
     for(int si = 2; si < t.getCityCount(); ++si)
@@ -28,7 +28,7 @@ SimpleSolver::Solution SimpleSolver::identify(const DistanceTable& d, const Tour
 }
 
 
-void SimpleSolver::optimize(const DistanceTable& d, Tour& t)
+void TwoOpt::optimize(const DistanceTable& d, Tour& t)
 {
     Tour best = t;
     for(int i = 0; i < m_restarts; ++i)

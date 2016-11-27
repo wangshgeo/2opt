@@ -8,10 +8,10 @@
 #include "Tour.h"
 
 
-class SimpleSolver
+class TwoOpt
 {
 public:
-    SimpleSolver(const int restarts) : m_restarts(restarts) {}
+    TwoOpt(const int restarts) : m_restarts(restarts) {}
     struct Solution
     {
       int change;

@@ -26,9 +26,9 @@ public:
             K = '2',
             TRIPLE = '3'
         };
-        ExchangeType e;
+        ExchangeType e = ExchangeType::NONE;
     };
-    void exchange(const Solution s, Tour& t);
+    void exchange(const Solution& s, Tour& t);
     void optimize(const DistanceTable& d, Tour& t);
 private:
     const int m_restarts = 1;
