@@ -18,6 +18,7 @@ inline int optimize(const char* filename)
     return t.length(d);
 }
 
+
 int main(int argc, char* argv[])
 {
     assert(optimize("../sets/burma14.tsp") == 3323);

@@ -17,9 +17,6 @@ ThreeOpt::Solution ThreeOpt::identify(const DistanceTable& d, const Tour& t) con
                 const int inext = t.getNextCityId(si);
                 const int jnext = t.getNextCityId(sj);
                 const int knext = t.getNextCityId(sk);
-                const int currentCost = d.getDistance(i, inext)
-                    + d.getDistance(j, jnext)
-                    + d.getDistance(k, knext);
                 constexpr int PossibleArrangements = 4;
                 const std::array<int, PossibleArrangements> newCosts
                 {
@@ -38,13 +35,16 @@ ThreeOpt::Solution ThreeOpt::identify(const DistanceTable& d, const Tour& t) con
                 };
                 const int* cheapest = std::min_element(
                     newCosts.begin(), newCosts.end());
+                const int currentCost = d.getDistance(i, inext)
+                    + d.getDistance(j, jnext)
+                    + d.getDistance(k, knext);
                 const int change = *cheapest - currentCost;
                 if(change < bestChange.change)
                 {
                     bestChange.change = change;
-                    bestChange.s[0] = si;
+                    bestChange.s[0] = sk;
                     bestChange.s[1] = sj;
-                    bestChange.s[2] = sk;
+                    bestChange.s[2] = si;
                     bestChange.e = [&]()
                     {
                         switch(cheapest - newCosts.begin())
@@ -60,6 +60,12 @@ ThreeOpt::Solution ThreeOpt::identify(const DistanceTable& d, const Tour& t) con
             }
         }
     }
+    std::cout << "Best change: " << bestChange.change
+        << "; i, j, k: " << bestChange.s[0]
+        << ", " << bestChange.s[1]
+        << ", " << bestChange.s[2]
+        << "; type: " << static_cast<char>(bestChange.e)
+        << std::endl;
     return bestChange;
 }
 
@@ -90,7 +96,14 @@ void ThreeOpt::exchange(const Solution& s, Tour& t)
     }
 }
 
-
+void printTour(const Tour& t)
+{
+    for(auto x : t.getTour())
+    {
+        std::cout << x << " ";
+    }
+    std::cout << std::endl;
+}
 void ThreeOpt::optimize(const DistanceTable& d, Tour& t)
 {
     Tour best = t;
@@ -99,8 +112,14 @@ void ThreeOpt::optimize(const DistanceTable& d, Tour& t)
         Solution s = identify(d, t);
         while(s.change < 0)
         {
+            const int before = t.length(d);
+            printTour(t);
             exchange(s, t);
+            printTour(t);
+            const int after = t.length(d);
+            std::cout << "delta: " << after-before << std::endl;
             s = identify(d, t);
+            assert(t.valid());
         }
         if(t.length(d) < best.length(d))
         {

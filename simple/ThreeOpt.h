@@ -21,8 +21,8 @@ public:
             NONE = '\0',
             I = '0',
             J = '1',
-            K = '2',
-            TRIPLE = '3'
+            TRIPLE = '2',
+            K = '3'
         };
         Solution() : change(0), s{0, 0, 0}, e(ExchangeType::NONE) {}
         int change;
