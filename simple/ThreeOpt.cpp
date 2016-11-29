@@ -3,7 +3,7 @@
 
 ThreeOpt::Solution ThreeOpt::identify(const DistanceTable& d, const Tour& t) const
 {
-    Solution bestChange = {0, 0, 0, 0, Solution::ExchangeType::NONE};
+    Solution bestChange;
     for(int si = 2; si < t.getCityCount(); ++si)
     {
         int sj = (si == t.getCityCount() - 1) ? 1 : 0;
@@ -41,21 +41,21 @@ ThreeOpt::Solution ThreeOpt::identify(const DistanceTable& d, const Tour& t) con
                 const int change = *cheapest - currentCost;
                 if(change < bestChange.change)
                 {
-                    bestChange =
+                    bestChange.change = change;
+                    bestChange.s[0] = si;
+                    bestChange.s[1] = sj;
+                    bestChange.s[2] = sk;
+                    bestChange.e = [&]()
                     {
-                        change, si, sj, sk,
-                        [&]()
+                        switch(cheapest - newCosts.begin())
                         {
-                            switch(cheapest - newCosts.begin())
-                            {
-                                case 0: return Solution::ExchangeType::I;
-                                case 1: return Solution::ExchangeType::J;
-                                case 2: return Solution::ExchangeType::TRIPLE;
-                                case 3: return Solution::ExchangeType::K;
-                                default: return Solution::ExchangeType::NONE;
-                            }
-                        }()
-                    };
+                            case 0: return Solution::ExchangeType::I;
+                            case 1: return Solution::ExchangeType::J;
+                            case 2: return Solution::ExchangeType::TRIPLE;
+                            case 3: return Solution::ExchangeType::K;
+                            default: return Solution::ExchangeType::NONE;
+                        }
+                    }();
                 }
             }
         }
