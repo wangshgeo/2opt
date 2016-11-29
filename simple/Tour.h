@@ -17,13 +17,13 @@ class Tour
         inline int getCityId(const int sequenceNumber) const;
         inline int getNextCityId(size_t sequenceNumber) const;
         bool valid() const;
-        int length(const DistanceTable& d) const;
         inline const std::vector<int>& getTour() const;
 
         inline void exchange(const int i, const int j);
         inline void shuffle();
         inline void perturb();
-    private:
+        int length(const DistanceTable& d) const;
+     private:
         std::vector<int> m_tour;
 };
 

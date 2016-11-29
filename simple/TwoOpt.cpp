@@ -3,7 +3,7 @@
 
 TwoOpt::Solution TwoOpt::identify(const DistanceTable& d, const Tour& t) const
 {
-    Solution bestChange = {0, 0, 0};
+    Solution bestChange;
     for(int si = 2; si < t.getCityCount(); ++si)
     {
         int sj = (si == t.getCityCount() - 1) ? 1 : 0;
@@ -20,7 +20,9 @@ TwoOpt::Solution TwoOpt::identify(const DistanceTable& d, const Tour& t) const
             const int change = newCost - currentCost;
             if(change < bestChange.change)
             {
-                bestChange = {change, si, sj};
+                bestChange.change = change;
+                bestChange.si = si;
+                bestChange.sj = sj;
             }
         }
     }
@@ -47,5 +49,30 @@ void TwoOpt::optimize(const DistanceTable& d, Tour& t)
     }
     t = best;
 }
+
+
+void TwoOpt::optimizeParallel(const DistanceTable& d, Tour& b)
+{
+    Tour currentTour = b;
+    #pragma omp parallel for firstprivate(currentTour)
+    for(int i = 0; i < m_restarts; ++i)
+    {
+        #pragma omp critical
+        currentTour.shuffle();
+        Solution s = identify(d, currentTour);
+        while(s.change < 0)
+        {
+            currentTour.exchange(s.si, s.sj);
+            s = identify(d, currentTour);
+        }
+        const int currentLength = currentTour.length(d);
+        #pragma omp critical
+        if(currentLength < b.length(d))
+        {
+            b = currentTour;
+        }
+    }
+}
+
 
 

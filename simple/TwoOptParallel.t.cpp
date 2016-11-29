@@ -13,7 +13,7 @@ inline int optimize(const char* filename)
     const DistanceTable d(r.getCities(), r.getCostFunction());
     Tour t(r.getCities().size());
     TwoOpt s(t.getCityCount());
-    s.optimize(d, t);
+    s.optimizeParallel(d, t);
     return t.length(d);
 }
 
