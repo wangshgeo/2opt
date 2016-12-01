@@ -34,6 +34,10 @@ void ThreeOpt::optimize()
 
 bool ThreeOpt::isNewSegment(const int currIndex, const int cityId) const
 {
+    std::cout << "prev, next, other: "
+        << m_prev[currIndex] << ", "
+        << m_next[currIndex] << ", "
+        << cityId << std::endl;
     return m_next[currIndex] != cityId and m_prev[currIndex] != cityId;
 }
 
@@ -81,6 +85,11 @@ int ThreeOpt::calculateNewCost(const ExchangeType e) const
         default:
             break;
     }
+    std::cout << "invalid swap set "
+        << m_curr[0] << ", "
+        << m_curr[1] << ", "
+        << m_curr[2] << "; "
+        << static_cast<char>(e) << std::endl;
     return std::numeric_limits<int>::max();
 }
 
