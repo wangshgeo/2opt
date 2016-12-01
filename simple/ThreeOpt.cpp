@@ -1,102 +1,10 @@
 #include "ThreeOpt.h"
 
 
-ThreeOpt::Solution ThreeOpt::identify(const DistanceTable& d, const Tour& t) const
-{
-    Solution bestChange;
-    for(int si = 2; si < t.getCityCount(); ++si)
-    {
-        int sj = (si == t.getCityCount() - 1) ? 1 : 0;
-        for(; sj < si - 1; ++sj)
-        {
-            for(int sk = 0; sk < sj - 1; ++sk)
-            {
-                const int i = t.getCityId(si);
-                const int j = t.getCityId(sj);
-                const int k = t.getCityId(sk);
-                const int inext = t.getNextCityId(si);
-                const int jnext = t.getNextCityId(sj);
-                const int knext = t.getNextCityId(sk);
-                constexpr int PossibleArrangements = 4;
-                const std::array<int, PossibleArrangements> newCosts
-                {
-                    d.getDistance(i, j)
-                        + d.getDistance(k, inext)
-                        + d.getDistance(jnext, knext),
-                    d.getDistance(i, jnext)
-                        + d.getDistance(j, k)
-                        + d.getDistance(inext, knext),
-                    d.getDistance(i, jnext)
-                        + d.getDistance(j, knext)
-                        + d.getDistance(k, inext),
-                    d.getDistance(i, k)
-                        + d.getDistance(j, knext)
-                        + d.getDistance(inext, jnext)
-                };
-                const int* cheapest = std::min_element(
-                    newCosts.begin(), newCosts.end());
-                const int currentCost = d.getDistance(i, inext)
-                    + d.getDistance(j, jnext)
-                    + d.getDistance(k, knext);
-                const int change = *cheapest - currentCost;
-                if(change < bestChange.change)
-                {
-                    bestChange.change = change;
-                    bestChange.s[0] = sk;
-                    bestChange.s[1] = sj;
-                    bestChange.s[2] = si;
-                    bestChange.e = [&]()
-                    {
-                        switch(cheapest - newCosts.begin())
-                        {
-                            case 0: return Solution::ExchangeType::I;
-                            case 1: return Solution::ExchangeType::J;
-                            case 2: return Solution::ExchangeType::TRIPLE;
-                            case 3: return Solution::ExchangeType::K;
-                            default: return Solution::ExchangeType::NONE;
-                        }
-                    }();
-                }
-            }
-        }
-    }
-    std::cout << "Best change: " << bestChange.change
-        << "; i, j, k: " << bestChange.s[0]
-        << ", " << bestChange.s[1]
-        << ", " << bestChange.s[2]
-        << "; type: " << static_cast<char>(bestChange.e)
-        << std::endl;
-    return bestChange;
-}
+ThreeOpt::ThreeOpt(const DistanceTable& d, Tour& t) : m_d(d), m_t(t) {}
 
 
-void ThreeOpt::exchange(const Solution& s, Tour& t)
-{
-    switch(s.e)
-    {
-        case Solution::ExchangeType::I:
-            t.exchange(s.s[0], s.s[1]);
-            t.exchange(s.s[1], s.s[2]);
-        break;
-        case Solution::ExchangeType::J:
-            t.exchange(s.s[1], s.s[2]);
-            t.exchange(s.s[2], s.s[0]);
-        break;
-        case Solution::ExchangeType::TRIPLE:
-            t.exchange(s.s[0], s.s[1]);
-            t.exchange(s.s[1], s.s[2]);
-            t.exchange(s.s[0], s.s[2]);
-        break;
-        case Solution::ExchangeType::K:
-            t.exchange(s.s[2], s.s[0]);
-            t.exchange(s.s[1], s.s[2]);
-        break;
-        default:
-        break;
-    }
-}
-
-void printTour(const Tour& t)
+inline void printTour(const Tour& t)
 {
     for(auto x : t.getTour())
     {
@@ -104,30 +12,166 @@ void printTour(const Tour& t)
     }
     std::cout << std::endl;
 }
-void ThreeOpt::optimize(const DistanceTable& d, Tour& t)
+
+
+void ThreeOpt::optimize()
 {
-    Tour best = t;
-    for(int i = 0; i < m_restarts; ++i)
+    identify();
+    while(m_change < 0)
     {
-        Solution s = identify(d, t);
-        while(s.change < 0)
-        {
-            const int before = t.length(d);
-            printTour(t);
-            exchange(s, t);
-            printTour(t);
-            const int after = t.length(d);
-            std::cout << "delta: " << after-before << std::endl;
-            s = identify(d, t);
-            assert(t.valid());
-        }
-        if(t.length(d) < best.length(d))
-        {
-            best = t;
-        }
-        t.shuffle();
+        const int before = m_t.length(m_d);
+        printTour(m_t);
+        exchange();
+        printTour(m_t);
+        const int after = m_t.length(m_d);
+        std::cout << "delta: " << after-before << std::endl;
+        identify();
+        assert(m_t.valid());
+        std::cout << "iter end change: " << m_change << std::endl;
     }
-    t = best;
+}
+
+
+bool ThreeOpt::isNewSegment(const int currIndex, const int cityId) const
+{
+    return m_next[currIndex] != cityId and m_prev[currIndex] != cityId;
+}
+
+
+int ThreeOpt::calculateNewCost(const ExchangeType e) const
+{
+    // Check for existing edge and abort if found
+    //  (that would be 2opt and we don't do 2opt here).
+    switch(e)
+    {
+        case ExchangeType::I:
+            if(isNewSegment(2, m_next[0]))
+            {
+                return m_d.getDistance(m_curr[0], m_curr[1])
+                    + m_d.getDistance(m_curr[2], m_next[0])
+                    + m_d.getDistance(m_next[1], m_next[2]);
+            }
+            break;
+        case ExchangeType::J:
+            if(isNewSegment(0, m_next[1]))
+            {
+                return m_d.getDistance(m_curr[0], m_next[1])
+                    + m_d.getDistance(m_curr[1], m_curr[2])
+                    + m_d.getDistance(m_next[0], m_next[2]);
+            }
+            break;
+        case ExchangeType::TRIPLE:
+            if(isNewSegment(0, m_next[1])
+                and isNewSegment(1, m_next[2])
+                and isNewSegment(2, m_next[0]))
+            {
+                return m_d.getDistance(m_curr[0], m_next[1])
+                    + m_d.getDistance(m_curr[1], m_next[2])
+                    + m_d.getDistance(m_curr[2], m_next[0]);
+            }
+            break;
+        case ExchangeType::K:
+            if(isNewSegment(1, m_next[2]))
+            {
+                return m_d.getDistance(m_curr[0], m_curr[2])
+                    + m_d.getDistance(m_curr[1], m_next[2])
+                    + m_d.getDistance(m_next[0], m_next[1]);
+            }
+            break;
+        default:
+            break;
+    }
+    return std::numeric_limits<int>::max();
+}
+
+
+void ThreeOpt::identify() const
+{
+    for(int si = 4; si < m_t.getCityCount(); ++si)
+    {
+        int sj = (si == m_t.getCityCount() - 1) ? 3: 2;
+        for(; sj < si - 1; ++sj)
+        {
+            int sk = (si == m_t.getCityCount() - 1) ? 1: 0;
+            for(; sk < sj - 1; ++sk)
+            {
+                determineCityIds(si, sj, sk);
+                constexpr int PossibleArrangements = 4;
+                const std::array<int, PossibleArrangements> newCosts
+                {
+                    calculateNewCost(ExchangeType::I),
+                    calculateNewCost(ExchangeType::J),
+                    calculateNewCost(ExchangeType::TRIPLE),
+                    calculateNewCost(ExchangeType::K)
+                };
+                const int* cheapest = std::min_element(
+                    newCosts.begin(), newCosts.end());
+                const int currentCost = m_d.getDistance(m_curr[0], m_next[0])
+                    + m_d.getDistance(m_curr[1], m_next[1])
+                    + m_d.getDistance(m_curr[2], m_next[2]);
+                const int change = *cheapest - currentCost;
+                if(change < m_change)
+                {
+                    m_change = change;
+                    m_s[0] = sk;
+                    m_s[1] = sj;
+                    m_s[2] = si;
+                    m_e = [&]()
+                    {
+                        switch(cheapest - newCosts.begin())
+                        {
+                            case 0: return ExchangeType::I;
+                            case 1: return ExchangeType::J;
+                            case 2: return ExchangeType::TRIPLE;
+                            case 3: return ExchangeType::K;
+                            default: return ExchangeType::NONE;
+                        }
+                    }();
+                }
+            }
+        }
+    }
+}
+
+
+void ThreeOpt::exchange()
+{
+    switch(m_e)
+    {
+        case ExchangeType::I:
+            m_t.exchange(m_s[0], m_s[1]);
+            m_t.exchange(m_s[1], m_s[2]);
+        break;
+        case ExchangeType::J:
+            m_t.exchange(m_s[1], m_s[2]);
+            m_t.exchange(m_s[2], m_s[0]);
+        break;
+        case ExchangeType::TRIPLE:
+            m_t.exchange(m_s[0], m_s[1]);
+            m_t.exchange(m_s[1], m_s[2]);
+            m_t.exchange(m_s[0], m_s[2]);
+        break;
+        case ExchangeType::K:
+            m_t.exchange(m_s[2], m_s[0]);
+            m_t.exchange(m_s[1], m_s[2]);
+        break;
+        default:
+        break;
+    }
+}
+
+
+void ThreeOpt::determineCityIds(const int si, const int sj, const int sk) const
+{
+    m_prev[0] = m_t.getPrevCityId(si);
+    m_prev[1] = m_t.getPrevCityId(sj);
+    m_prev[2] = m_t.getPrevCityId(sk);
+    m_curr[0] = m_t.getCityId(si);
+    m_curr[1] = m_t.getCityId(sj);
+    m_curr[2] = m_t.getCityId(sk);
+    m_next[0] = m_t.getNextCityId(si);
+    m_next[1] = m_t.getNextCityId(sj);
+    m_next[2] = m_t.getNextCityId(sk);
 }
 
 

@@ -16,6 +16,7 @@ class Tour
         inline int getCityCount() const;
         inline int getCityId(const int sequenceNumber) const;
         inline int getNextCityId(size_t sequenceNumber) const;
+        inline int getPrevCityId(size_t sequenceNumber) const;
         bool valid() const;
         inline const std::vector<int>& getTour() const;
 
@@ -53,6 +54,14 @@ int Tour::getNextCityId(size_t sequenceNumber) const
 {
     sequenceNumber = (sequenceNumber + 1 == m_tour.size())
         ? 0 : sequenceNumber + 1;
+    return m_tour[sequenceNumber];
+}
+
+
+int Tour::getPrevCityId(size_t sequenceNumber) const
+{
+    sequenceNumber = (sequenceNumber == 0)
+        ? m_tour.size() - 1 : sequenceNumber - 1;
     return m_tour[sequenceNumber];
 }
 

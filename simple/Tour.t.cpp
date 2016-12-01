@@ -2,8 +2,8 @@
 #include <iostream>
 #include <vector>
 
+#include "DistanceTable.h"
 #include "Tour.h"
-
 
 void printTour(const Tour& t)
 {
@@ -13,6 +13,7 @@ void printTour(const Tour& t)
     }
     std::cout << std::endl;
 }
+
 
 
 int main(int argc, char* argv[])
