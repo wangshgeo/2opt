@@ -1,5 +1,5 @@
 *.out
 *.o
-2opt
-2optParallel
-3opt
+*optParallel
+*opt
+sweep

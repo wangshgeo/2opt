@@ -12,8 +12,8 @@ inline int optimize(const char* filename)
     Reader r(filename);
     const DistanceTable d(r.getCities(), r.getCostFunction());
     Tour t(r.getCities().size());
-    TwoOpt s(t.getCityCount());
-    s.optimizeParallel(d, t);
+    TwoOpt s(t.getCityCount(), d, t);
+    s.optimizeParallel();
     return t.length(d);
 }
 

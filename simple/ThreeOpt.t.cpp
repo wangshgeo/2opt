@@ -21,7 +21,12 @@ inline int optimize(const char* filename)
 
 int main(int argc, char* argv[])
 {
-    optimize("../sets/hex6.tsp");
+    if(argc == 2)
+    {
+        optimize(argv[1]);
+    }
+
+    // optimize("../sets/hex6.tsp");
     // assert(optimize("../sets/burma14.tsp") == 3323);
     // assert(optimize("../sets/ulysses16.tsp") == 6859);
     // assert(optimize("../sets/berlin52.tsp") == 7542);
@@ -29,7 +34,6 @@ int main(int argc, char* argv[])
     // assert(optimize("../sets/ch150.tsp") == 6528);
     // assert(optimize("../sets/gr202.tsp") == 40160);
 
-    std::cout << "Passed all tests." << std::endl;
     return 0;
 }
 

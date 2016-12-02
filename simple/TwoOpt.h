@@ -11,19 +11,23 @@
 class TwoOpt
 {
 public:
-    TwoOpt(const int restarts) : m_restarts(restarts) {}
+    TwoOpt(const int restarts, const DistanceTable&, Tour&);
+
+    int optimize();
+    void optimizeRestarts();
+    void optimizeParallel();
+private:
+    const int m_restarts = 10;
+    const DistanceTable& d;
+    Tour& t;
+
     struct Solution
     {
         Solution() : change(0), si(0), sj(0) {}
       int change;
       int si, sj;
     };
-    void optimize(const DistanceTable& d, Tour& t);
-    void optimizeParallel(const DistanceTable& d, Tour& t);
-private:
-    const int m_restarts = 10;
-
-    Solution identify(const DistanceTable& d, const Tour& t) const;
+    Solution identify() const;
 };
 
 
