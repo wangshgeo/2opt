@@ -12,8 +12,8 @@ struct Set
     inline bool full() const;
 };
 
-
-inline void Set::push(Segment s_)
+template <int S>
+inline void Set<S>::push(Segment s_)
 {
     if(i < S)
     {
@@ -22,8 +22,8 @@ inline void Set::push(Segment s_)
     }
 }
 
-
-bool Set::full() const
+template <int S>
+bool Set<S>::full() const
 {
     return i == S;
 }

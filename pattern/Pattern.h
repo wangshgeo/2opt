@@ -1,59 +1,124 @@
 #pragma once
 
-
 #include <array>
+#include <iostream>
 #include <vector>
 
 #include "Set.h"
 
 
-template <int K>
+template <std::size_t Segments>
 class Pattern
 {
 public:
-    template <int C>
-    void pair(const int city, std::array<int, C> candidates);
+    Pattern();
+    void printSets() const;
 private:
-    std::vector<Set<K>> m_sets;
-    Set<K> m_set;
+    static constexpr std::size_t Points = 2 * Segments;
+    using CanVec = std::vector<std::size_t>;
+    using SegVec = std::vector<Segment>;
 
-    template <int C>
-    std::array<int, C-2> valid(const int city, std::array<int, C> candidates);
-    template <int C>
-    inline int next(const int a) { return (a + 1) % C; }
-    template <int C>
-    inline int prev(const int a) { return (a + C - 1) % C; }
+    std::vector<SegVec> m_sets;
+
+    void pairOff(std::size_t city, CanVec, SegVec);
+    decltype(CanVec()) valid(std::size_t city, CanVec);
+    decltype(CanVec()) oneOut(std::size_t city, CanVec);
+    inline std::size_t next(std::size_t c) { return (c + 1) % Points; }
+    inline std::size_t prev(std::size_t c) { return (c + Points - 1) % Points; }
 };
 
 
-template <int K>
-template <int C>
-void Pattern<K>::pair(const int city, std::array<int, C> candidates)
+template <std::size_t Segments>
+Pattern<Segments>::Pattern()
 {
-    if(C == 0)
+    CanVec can;
+    can.resize(Points - 1);
+    std::size_t i = 0;
+    for(auto& c : can)
     {
-        m_sets.push_back(m_set);
+        c = ++i;
+    }
+    pairOff(0, can, SegVec());
+}
+
+template <std::size_t Segments>
+void Pattern<Segments>::printSets() const
+{
+    for(auto set : m_sets)
+    {
+        for(auto c : set)
+        {
+            std::cout << c.a << " " << c.b << " ";
+        }
+        std::cout << "\n";
+    }
+    std::cout << "Swap sets: " << m_sets.size() << "\n";
+}
+
+template <std::size_t Segments>
+void Pattern<Segments>::pairOff(std::size_t city,
+    CanVec candidates, SegVec set)
+{
+    // Recursive end condition.
+    if (set.size() == Segments)
+    {
+        if (candidates.size() != 0)
+        {
+            std::cout << "Unexpectedly have a full"
+                " set, but candidates remain."
+                << std::endl;
+        }
+        m_sets.push_back(set);
         return;
     }
-    for(
+    // Attempt to pair and pass off for more pairings.
+    auto filtered = valid(city, candidates);
+    if(filtered.size() > 0)
+    {
+        for(auto f : filtered)
+        {
+            auto newSet = set;
+            newSet.push_back(Segment(city, f));
+            auto newCandidates = oneOut(f, candidates);
+            // Pick arbitrary new city.
+            std::size_t newCity = 0;
+            if (newCandidates.size() > 0)
+            {
+                newCity = newCandidates.back();
+                newCandidates.pop_back();
+            }
+            pairOff(newCity, newCandidates, newSet);
+        }
+    }
+}
+
+template <std::size_t Segments>
+typename Pattern<Segments>::CanVec Pattern<Segments>::oneOut(std::size_t city, CanVec orig)
+{
+    CanVec ret;
+    for(auto c : orig)
+    {
+        if (c != city)
+        {
+            ret.push_back(c);
+        }
+    }
+    return ret;
 }
 
 
-
-template <int K>
-template <int C>
-std::array<int, C-2> Pattern<K>::valid(const int city, std::array<int, C> candidates)
+template <std::size_t Segments>
+typename Pattern<Segments>::CanVec Pattern<Segments>::valid(std::size_t city, CanVec candidates)
 {
-    std::array<int, C-2> v;
-    int i = 0;
-    for(int k = 0; k < C; ++k)
+    CanVec v;
+    for(auto c : candidates)
     {
-        if(k != i and k != next(i) and k != prev(i))
+        if (c != city and c != next(city) and c != prev(city))
         {
-            v[i] = k;
-            ++i;
+            v.push_back(c);
         }
     }
+    return v;
 }
 
 

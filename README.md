@@ -47,11 +47,12 @@ Quadtree performance on my machine:
 
 The quadtree implementation's sub-quadratic complexity is clearly evident.
 
-# Potential Improvements
+# Action Stack (Desired Improvements)
 
-1. More filter quantities (to reduce tree traversal).
-2. More tree updates of filter quantities.
-3. k-opt
+1. [pattern] Swap set finder (for general k-opt).
+2. [new] k-opt
+3. [quadtree] More filter quantities (to reduce tree traversal).
+4. [quadtree] More tree updates of filter quantities.
 
 # Running the Programs
 
