@@ -6,18 +6,18 @@
 
 #include "Set.h"
 
-
 template <std::size_t Segments>
-class Pattern
+class SwapPool
 {
-public:
-    Pattern();
-    void printSets() const;
-private:
     static constexpr std::size_t Points = 2 * Segments;
     using CanVec = std::vector<std::size_t>;
     using SegVec = std::vector<Segment>;
-
+public:
+    SwapPool();
+    std::vector<SegVec>& getPool() const;
+    void printSets() const;
+    void printCount() const;
+private:
     std::vector<SegVec> m_sets;
 
     void pairOff(std::size_t city, CanVec, SegVec);
@@ -29,7 +29,14 @@ private:
 
 
 template <std::size_t Segments>
-Pattern<Segments>::Pattern()
+typename std::vector<typename SwapPool<Segments>::SegVec>& SwapPool<Segments>::getPool() const
+{
+    return m_sets;
+}
+
+
+template <std::size_t Segments>
+SwapPool<Segments>::SwapPool()
 {
     CanVec can;
     can.resize(Points - 1);
@@ -41,8 +48,9 @@ Pattern<Segments>::Pattern()
     pairOff(0, can, SegVec());
 }
 
+
 template <std::size_t Segments>
-void Pattern<Segments>::printSets() const
+void SwapPool<Segments>::printSets() const
 {
     for(auto set : m_sets)
     {
@@ -52,11 +60,20 @@ void Pattern<Segments>::printSets() const
         }
         std::cout << "\n";
     }
-    std::cout << "Swap sets: " << m_sets.size() << "\n";
+    printCount();
 }
 
+
 template <std::size_t Segments>
-void Pattern<Segments>::pairOff(std::size_t city,
+void SwapPool<Segments>::printCount() const
+{
+    std::cout << "Swap sets for " << Segments
+        << "-Opt: " << m_sets.size() << "\n";
+}
+
+
+template <std::size_t Segments>
+void SwapPool<Segments>::pairOff(std::size_t city,
     CanVec candidates, SegVec set)
 {
     // Recursive end condition.
@@ -93,7 +110,7 @@ void Pattern<Segments>::pairOff(std::size_t city,
 }
 
 template <std::size_t Segments>
-typename Pattern<Segments>::CanVec Pattern<Segments>::oneOut(std::size_t city, CanVec orig)
+typename SwapPool<Segments>::CanVec SwapPool<Segments>::oneOut(std::size_t city, CanVec orig)
 {
     CanVec ret;
     for(auto c : orig)
@@ -108,7 +125,7 @@ typename Pattern<Segments>::CanVec Pattern<Segments>::oneOut(std::size_t city, C
 
 
 template <std::size_t Segments>
-typename Pattern<Segments>::CanVec Pattern<Segments>::valid(std::size_t city, CanVec candidates)
+typename SwapPool<Segments>::CanVec SwapPool<Segments>::valid(std::size_t city, CanVec candidates)
 {
     CanVec v;
     for(auto c : candidates)
