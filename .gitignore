@@ -1,7 +1,6 @@
 *.out
 *.o
 *optParallel
-*opt
 sweep
 pattern
 log
