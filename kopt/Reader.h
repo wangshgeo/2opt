@@ -16,12 +16,12 @@ public:
     Reader(std::string filename);
     const std::vector<City>& getCities() const;
     CostFunction getCostFunction() const;
+    int getCityCount() const;
 private:
     std::string m_filename;
     std::vector<City> m_cities;
 
     void readCities();
     std::vector<std::string> spaceTokens(std::string line) const;
-    int getCityCount() const;
 };
 

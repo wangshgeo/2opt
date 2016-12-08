@@ -14,7 +14,7 @@ bool Tour::valid() const
     std::vector<int> visited(m_s.size(), 0);
     for(const auto s : m_s)
     {
-        if(++visited[s[0]] > 2 or ++visited[s[1]] > 2)
+        if(++visited[s.c[0]] > 2 or ++visited[s.c[1]] > 2)
         {
             return false;
         }
@@ -58,11 +58,11 @@ void Tour::connect()
 }
 
 
-void Tour::compute(const DistanceTable& d)
+void Tour::computeDistances(const DistanceTable& d)
 {
     for(auto& s : m_s)
     {
-        s.length = d.get(s[0], s[1]);
+        s.length = d.get(s.c[0], s.c[1]);
     }
 }
 

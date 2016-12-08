@@ -2,14 +2,16 @@
 #include <iostream>
 #include <vector>
 
+#include "Reader.h"
 #include "DistanceTable.h"
 #include "Tour.h"
 
+
 void printTour(const Tour& t)
 {
-    for(auto x : t.getTour())
+    for(const auto& s : t.m_s)
     {
-        std::cout << x << " ";
+        std::cout << s.c[0] << " ";
     }
     std::cout << std::endl;
 }
@@ -18,38 +20,14 @@ void printTour(const Tour& t)
 
 int main(int argc, char* argv[])
 {
+    if(argc != 2)
     {
-        std::vector<int> initialTour(10);
-        int i = -1;
-        for(auto& city : initialTour)
-        {
-            city = ++i;
-        }
-        Tour t(initialTour);
-        t.exchange(4, 9);
-        t.exchange(0, 5);
-        t.exchange(3, 9);
-        t.exchange(0, 9);
-        t.exchange(6, 6);
-        t.exchange(6, 1);
-        assert(t.valid());
+        return 0;
     }
-    {
-        std::vector<int> initialTour(6);
-        int i = -1;
-        for(auto& city : initialTour)
-        {
-            city = ++i;
-        }
-        Tour t(initialTour);
-        printTour(t);
-        t.exchange(0, 2);
-        printTour(t);
-        t.exchange(2, 4);
-        printTour(t);
-        t.exchange(0, 4);
-        printTour(t);
-    }
+    Reader r(argv[1]);
+    const DistanceTable d(r.getCities(), r.getCostFunction());
+    Tour t(r.getCityCount(), d);
+
     std::cout << "Tests passed." << std::endl;
     return 0;
 }

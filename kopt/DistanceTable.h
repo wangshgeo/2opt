@@ -29,7 +29,7 @@ class DistanceTable
 };
 
 
-int DistanceTable::getDistance(const int i, const int j) const
+int DistanceTable::get(const int i, const int j) const
 {
   return m_distances[m_hash.hash(i, j)];
 }
