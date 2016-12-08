@@ -15,7 +15,7 @@ struct Tour
     Tour(const std::size_t cities, const DistanceTable& d);
 
     template <std::size_t K>
-    inline void exchange(Segment** s, const int* swapSet);
+    inline void exchange(Segment* s[K], const int swapSet[2 * K]);
 
     int length() const;
     bool valid() const;
@@ -35,7 +35,7 @@ private:
 
 template <std::size_t K>
 void Tour::exchange(
-    Segment** segments, const int* swapSet)
+    Segment* segments[K], const int swapSet[2 * K])
 {
     int relativeMap[2 * K];
     int cities[2 * K];
