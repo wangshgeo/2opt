@@ -2,10 +2,11 @@
 
 
 Tour::Tour(const std::size_t cities, const DistanceTable& d)
+    : m_d(d)
 {
     initialize(cities);
     connect();
-    computeDistances(d);
+    computeDistances();
 }
 
 
@@ -58,11 +59,11 @@ void Tour::connect()
 }
 
 
-void Tour::computeDistances(const DistanceTable& d)
+void Tour::computeDistances()
 {
     for(auto& s : m_s)
     {
-        s.length = d.get(s.c[0], s.c[1]);
+        s.length = m_d.get(s.c[0], s.c[1]);
     }
 }
 

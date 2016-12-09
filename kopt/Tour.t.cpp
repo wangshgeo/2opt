@@ -27,6 +27,14 @@ int main(int argc, char* argv[])
     Reader r(argv[1]);
     const DistanceTable d(r.getCities(), r.getCostFunction());
     Tour t(r.getCityCount(), d);
+    std::cout << "Initial tour length: " << t.length() << "\n";
+    assert(t.valid());
+
+    std::array<Segment*, 2> segments = {&t.m_s[0], &t.m_s[2]};
+    std::array<int, 4> swapSet = {0, 2, 1, 3};
+    t.exchange(segments, swapSet);
+    std::cout << "Post-swap tour length: " << t.length() << "\n";
+    assert(t.valid());
 
     std::cout << "Tests passed." << std::endl;
     return 0;
