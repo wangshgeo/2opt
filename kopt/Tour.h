@@ -1,5 +1,6 @@
 #pragma once
 
+
 // A tour consists of a sequence of segments.
 // City ids range from [0, m_s.size())
 
@@ -9,77 +10,62 @@
 #include <iostream>
 #include <vector>
 
-#include "Segment.h"
 #include "DistanceTable.h"
+#include "Segment.h"
+#include "SwapMap.h"
+#include "SwapSet.h"
 
 
 struct Tour
 {
     Tour(const std::size_t cities, const DistanceTable& d);
 
+    // Most useful member functions.
     template <std::size_t K>
-    inline void exchange(std::array<Segment*, K>&, const std::array<int, 2 * K> swapSet);
-
+    inline void exchange(SwapSet&, const SwapMap&);
     int length() const;
-    bool valid() const;
+    inline int nextCity(const Segment* currentSegment, const int prevCity) const;
 
+    // For debugging purposes.
+    bool valid() const;
+    void print() const;
+
+    // Member variables.
     std::vector<Segment> m_s;
     const DistanceTable& m_d;
 private:
     void initialize(const std::size_t cities);
     void connect();
     void computeDistances();
-    template <std::size_t K>
-    inline int getCityId(
-        const std::array<Segment*, K>&, const int relIndex) const;
-    template <std::size_t K>
-    inline void setCityId(
-        std::array<Segment*, K>&, const int relIndex, const int cityId);
 };
 
 
 template <std::size_t K>
-void Tour::exchange(std::array<Segment*, K>& segments, const std::array<int, 2 * K> swapSet)
+void Tour::exchange(SwapSet& set, const SwapMap& map)
 {
-    std::array<int, 2 * K> relativeMap;
-    std::array<int, 2 * K> cities;
+    // Prevent overwriting prematurely.
+    SwapMap cityIds;
     for (std::size_t i = 0; i < K; ++i)
     {
-        int j = swapSet[2 * i];
-        int k = swapSet[2 * i + 1];
-        relativeMap[j] = k;
-        relativeMap[k] = j;
-        cities[j] = getCityId(segments, j);
-        cities[k] = getCityId(segments, k);
+        cityIds[i] = set[map[i]]->c;
     }
-    for (std::size_t i = 0; i < 2 * K; ++i)
+    // Assign new cities to segments and reconnect.
+    for (std::size_t i = 0; i < K; ++i)
     {
-        setCityId(segments, i, cities[relativeMap[i]]);
+        set[i]->c = cityIds[i];
     }
-    for (auto& s : segments)
+    // Recompute distances.
+    for (std::size_t i = 0; i < K; ++i)
     {
-        s->length = m_d.get(s->c[0], s->c[1]);
-        std::cout << "segment: " << s->c[0] << ", " << s->c[1] << "\n";
+        set[i]->length = m_d.get(i, set[i]->c);
+        std::cout
+            << "segment: " << i << ", "
+            << set[i]->c << "\n";
     }
 }
 
-template <std::size_t K>
-int Tour::getCityId(
-        const std::array<Segment*, K>& segments, const int relIndex) const
+int Tour::nextCity(const Segment* currentSegment, const int prevCity) const
 {
-    int segmentIndex = relIndex / 2;
-    int pairIndex = relIndex % 2;
-    return segments[segmentIndex]->c[pairIndex];
+    return (currentSegment->c[0] != prevCity)
+        ? currentSegment->c[0] : currentSegment->c[1];
 }
-
-
-template <std::size_t K>
-void Tour::setCityId(
-        std::array<Segment*, K>& segments, const int relIndex, const int cityId)
-{
-    int segmentIndex = relIndex / 2;
-    int pairIndex = relIndex % 2;
-    segments[segmentIndex]->c[pairIndex] = cityId;
-}
-
-

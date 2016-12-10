@@ -24,6 +24,22 @@ bool Tour::valid() const
 }
 
 
+void Tour::print() const
+{
+    int prevCity = m_s[0].c[0];
+    const Segment* const firstSegment = &m_s[0];
+    const Segment* currentSegment = firstSegment;
+    do
+    {
+        std::cout << prevCity << " ";
+        int nextCity = currentSegment->nextCity(prevCity);
+        currentSegment = currentSegment->nextSegment(nextCity);
+        prevCity = nextCity;
+    } while (currentSegment != firstSegment);
+    std::cout << "\n";
+}
+
+
 int Tour::length() const
 {
     int sum = 0;
