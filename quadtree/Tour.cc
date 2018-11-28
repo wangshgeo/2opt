@@ -1,4 +1,5 @@
 #include "Tour.h"
+#include <vector>
 
 using namespace std;
 
