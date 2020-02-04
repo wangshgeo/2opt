@@ -1,4 +1,5 @@
-CUDA_PATH = /usr/local/cuda
+#CUDA_PATH = /usr/local/cuda
+CUDA_PATH = /usr/local/cuda-10.0
 MYARCH = 20
 CC = g++ 
 NVCC = $(CUDA_PATH)/bin/nvcc
